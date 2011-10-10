@@ -16,7 +16,7 @@ MeltHistos <- function(d,hist_type="Percent") {
   }
   drydata<-merge(drydata,bins)
   drydata$DateTime<-as.POSIXct(strptime(drydata$Date, "%Y-%m-%d %H:%M:%S",tz="UTC"),tz="UTC") + 
-    dhours(drydata$hrs)
+    drydata$hrs*3600
   drydata$DateTime<-force_tz(drydata$DateTime)
   drydata<-drydata[,c(2,6,4)]
   names(drydata)<-c("DeployID","DataDateTime","PercentDry")
