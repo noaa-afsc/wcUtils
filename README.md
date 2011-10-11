@@ -10,8 +10,8 @@ One of the main reasons for deploying Wildlife Computers tags is to gather infor
 
 Often, it is desirable for the data to be represented in a more vertical nature where each record specifies a single hour of a day (for 'Percent Dry' data) or a specific Bin range for dive data. This vertical structure is more easily imported into relational databases or other analysis functions. Re-shaping (in this case 'melting') the data into this vertical structure is the purpose of this function.
 
-Initially, the 'MeltHistos'' function has been written to process only those histogram data related to haul-out behavior. These records are identified within the *-Histos.csv as having a HistType of 'Percent' (or, in the rarer case 'TwentyMinTimeline'). This function requires the user to provide the path to the *-Histos.csv file and it returns a dataframe with three columns: DeployID, DataDateTime and PercentDry. All time values are in the UTC time zone.
+Initially, the 'MeltHistos'' function has been written to process only those histogram data related to haul-out behavior. These records are identified within the -Histos.csv' as having a HistType of 'Percent' (or, in the rarer case 'TwentyMinTimeline'). This function requires the user to provide the path to the -Histos.csv' file and it returns a dataframe with three columns: DeployID, DataDateTime and PercentDry. All time values are in the UTC time zone.
 
 'PrepareToCrawl':
 
-This function is still under development. The goal is to take the output from 'MeltHistos(d,hist_type="Percent")' and properly format and process the data for import into the 'crawl' package when haul-out behavior is included as part of the moevement modeling process.
+This function is still under development. The goal is to take the output from `MeltHistos(d,hist_type="Percent")` and properly format and process the data for import into the 'crawl' package when haul-out behavior is included as part of the moevement modeling process.
