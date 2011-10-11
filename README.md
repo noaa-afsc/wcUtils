@@ -2,7 +2,9 @@
 
 The aim of `wcUtils` is to make your life as an analyst of Wildlife Computers data a wee bit easier. You do need a rudimentary understanding of R and the package does require the R package 'reshape' (available on CRAN). At this point, the purpose of `wcUtils` is to make your life easier, not to do the analysis for you. As such, the tools focus more on manipulation of data and less on analysis. 
 
-See the Downloads pull-down menu above for source build (.tar.gz) and for a windows binary (.zip)
+Package source build: [wcUctils_0.1.tar.gz](https://github.com/downloads/NMML/wcUtils/wcUtils_0.1.tar.gz)  
+Windows binary:
+[wcUtils_0.1.zip](https://github.com/downloads/NMML/wcUtils/wcUtils_0.1.zip)
 
 ## Manipulating Histos Data
 
