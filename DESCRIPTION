@@ -1,0 +1,10 @@
+Package: wcUtils
+Title: Tools for working with Wildlife Computers WC-DAP software
+Version: 0.1
+Author: Josh M London <josh.london@noaa.gov>
+Maintainer: Josh M London <josh.london@noaa.gov>
+Description: Collection of tools for processing data output by Wildlife Computers WC-DAP software. Tools include such features as 'melting' the *-Histos.csv files so the 'Bin' data is represented in a more vertical nature than the horizontal structure as output from WC-DAP. Additionally, the package provides tools for creating the *.wcfilt XML files that describe projects. This can be created from a simple dataframe of tag deployments instead of having to rely on the WC-DAP GUI. Additional features and functionality is planned and the author is open to ideas and suggestions from WC-DAP users and data analysts.
+Depends:
+R (>= 2.13)
+Imports:
+reshape
