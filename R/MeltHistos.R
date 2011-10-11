@@ -7,7 +7,8 @@
 #' @export
 #' @importFrom reshape melt
 #' @examples
-#' drytimes<-MeltHistos(d,hist_type='Percent')
+#' example_csv<-system.file("sealdata.csv", package = "wcUtils") 
+#' drytimes<-MeltHistos(d=example_csv,hist_type='Percent')
 MeltHistos <- function(d,hist_type="Percent") {
   # function for 'melting' histos data output from Wildlife Computers' 
   # WC-DAP program. Stringent requirements exist for *-Histos.csv file 
