@@ -1,3 +1,13 @@
+#' Melt *-Histos.csv data.
+#'
+#' @param d path to *-Histos.csv as a string
+#' @param hist_type the type of histos data to melt. default is 'Percent'
+#' @return dataframe with three columns: DeployID,DataDateTime and PercentDry
+#' @seealso \code{\link{reshape}} which this function wraps
+#' @export
+#' @importFrom reshape melt
+#' @examples
+#' drytimes<-MeltHistos(d,hist_type='Percent')
 MeltHistos <- function(d,hist_type="Percent") {
   # function for 'melting' histos data output from Wildlife Computers' 
   # WC-DAP program. Stringent requirements exist for *-Histos.csv file 
