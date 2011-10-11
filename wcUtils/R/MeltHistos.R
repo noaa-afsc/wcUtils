@@ -1,4 +1,6 @@
-#' Melt -Histos.csv data to a more vertical data structure
+#' MeltHistos
+#'
+#' Melt XX-Histos.csv data to a more vertical data structure
 #'
 #' One of the main reasons for deploying Wildlife Computers tags is to gather 
 #' information related to dive and haul-out behavior. In order to work within 
