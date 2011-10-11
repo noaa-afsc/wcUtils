@@ -1,6 +1,6 @@
 \name{MeltHistos}
 \alias{MeltHistos}
-\title{Melt -Histos.csv data to a more vertical data structure}
+\title{MeltHistos}
 \usage{
   MeltHistos(d, hist_type = "Percent")
 }
@@ -15,6 +15,9 @@
   PercentDry
 }
 \description{
+  Melt XX-Histos.csv data to a more vertical data structure
+}
+\details{
   One of the main reasons for deploying Wildlife Computers
   tags is to gather information related to dive and
   haul-out behavior. In order to work within the bandwidth
@@ -33,8 +36,7 @@
   period) also specified by the user. All of these data are
   represented in the *-Histos.csv output from WC-DAP and
   the data structure is organized horizontally.
-}
-\details{
+
   Often, it is desirable for the data to be represented in
   a more vertical nature where each record specifies a
   single hour of a day (for 'Percent Dry' data) or a
