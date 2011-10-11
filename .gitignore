@@ -1,4 +1,5 @@
-.RData
+*.RData
 .Rproj.user
-.tar.gz
+*.tar
+*.gz
 .Rhistory
