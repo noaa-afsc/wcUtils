@@ -20,3 +20,4 @@ Collate:
     'MeltHistos.R'
     'wcUtils-package.R'
     'PrepareToCrawl.R'
+    'CreateWCFilt.R'
