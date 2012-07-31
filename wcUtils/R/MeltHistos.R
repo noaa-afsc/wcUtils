@@ -45,11 +45,12 @@ MeltHistos <- function(d,hist_type="Percent") {
   require(reshape)
   histos<-read.csv(d)
   histos_sub<-histos[histos$HistType == hist_type,]
+  histos_sub<-histos_sub[as.POSIXlt(as.POSIXct(strptime(histos_sub$Date, "%Y-%m-%d %H:%M:%S")))$hour == 0,]
   ind <- sapply(histos_sub, is.factor)
   histos_sub[ind] <- lapply(histos_sub[ind], "[", drop=TRUE)
   if(hist_type == 'Percent') {
-    bins<-data.frame(cbind(variable=paste("Bin",1:24,sep=""),hrs=0:23))
-    bins$hrs<-as.numeric(bins$hrs)
+    bins<-list(variable=paste("Bin",1:24,sep=""),hrs=0:23)
+    bins<-as.data.frame(bins)
     drydata<-histos_sub[,c(1,7,16:39)]
     drydata<-melt(drydata,id.vars=1:2)
     drydata<-merge(drydata,bins)
@@ -57,6 +58,17 @@ MeltHistos <- function(d,hist_type="Percent") {
                                           tz="UTC"),tz="UTC") + drydata$hrs*3600
     drydata<-drydata[,c(2,6,4)]
     names(drydata)<-c("DeployID","DataDateTime","PercentDry")
+  }
+  if(hist_type == 'TwentyMinTimeline') {
+      bins<-list(variable=paste("Bin",1:72,sep=""),secs=seq(from=0,by=1200,length.out=72))
+      bins<-as.data.frame(bins)
+      drydata<-histos_sub[,c(1,7,16:87)]
+      drydata<-melt(drydata,id.vars=1:2)
+      drydata<-merge(drydata,bins)
+      drydata$DateTime<-as.POSIXct(strptime(drydata$Date, "%Y-%m-%d %H:%M:%S",
+                                            tz="UTC"),tz="UTC") + drydata$secs
+      drydata<-drydata[,c(2,6,4)]
+      names(drydata)<-c("DeployID","DataDateTime","PercentDry")
   }
   drydata<-drydata[with(drydata, order(DeployID, DataDateTime)), ]
   return(drydata)
