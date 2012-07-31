@@ -1,6 +1,8 @@
 *.RData
 .Rproj.user
+*.Rproj
 *.tar
 *.gz
 *.zip
 .Rhistory
+wcUtils.Rproj
