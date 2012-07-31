@@ -71,6 +71,21 @@ MeltHistos <- function(d,hist_type="Percent") {
       names(drydata)<-c("DeployID","DataDateTime","PercentDry")
   }
   drydata<-drydata[with(drydata, order(DeployID, DataDateTime)), ]
-  return(drydata)
+  #this is where we add in NA's for missing data
+  #first get the start/end times for each seal and store in a list
+  ll <- vector(mode="list",length=length(levels(drydata$DeployID)))
+  for(i in 1:length(levels(drydata$DeployID))) {
+    ll[[i]] <- list(start=min(drydata$DataDateTime[drydata$DeployID==levels(drydata$DeployID[i])]),
+                    finish=max(drydata$DataDateTime[drydata$DeployID==levels(drydata$DeployID[i])]))
+  }
+  names(ll) <- levels(drydata$DeployID)
+  fulldata <- NULL
+  diff <- ifelse(hist_type=="Percent","1 hour","20 mins")
+  for(j in names(ll)) {
+    fulldata<-rbind(fulldata, data.frame(DeployID=j,
+    DataDateTime=seq(from=ll[[j]]$start,to=ll[[j]]$finish,by=diff)))
+  }
+  fulldata <- merge(fulldata,drydata,all.x=TRUE)
+  return(fulldata)
 }
 
