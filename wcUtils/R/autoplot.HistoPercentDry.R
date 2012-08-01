@@ -2,12 +2,15 @@
 #'
 #' 
 #' @param d dataframe object output from MeltHistos function
+#' @param ids vector representing the index of DeployIDs to use. Cannot be more than 3.
 #' @return ggplot
 #' @note future plans to evolve this to an autoplot function
 #' @author Josh M London \email{josh.london@@noaa.gov}
 #' @export
 #' @import ggplot2
-autoplot.HistoPercentDry<- function(d, ..., xlab="", ylab="", title="Percent Dry Timeline") {
+autoplot.HistoPercentDry<- function(d, ids=c(1:3),..., xlab="", ylab="", title="Percent Dry Timeline") {
+  d<-d[d$DeployID %in% levels(d$DeployID)[ids],]
+  if(length(levels(d$DeployID))>3) stop("More than 3 DeployIDs might hurt ggplot or your eyes")
   d$Hour <- as.POSIXlt(d$DataDateTime,"GMT")$hour
   d$DayOfMonth <- as.POSIXlt(d$DataDateTime,"GMT")$mday
   d$Month <- as.POSIXlt(d$DataDateTime,"GMT")$mon+1
