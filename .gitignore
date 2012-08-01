@@ -5,4 +5,5 @@
 *.gz
 *.zip
 .Rhistory
-wcUtils.Rproj
+*.Rproj
+*.tgz
