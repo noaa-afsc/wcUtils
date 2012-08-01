@@ -14,10 +14,14 @@ Description: The aim of `wcUtils` is to make your life as
     is to make your life easier, not to do the analysis for
     you. As such, the tools focus more on manipulation of
     data and less on analysis.
-License: public domain
+License: open
+Depends:
+    reshape,
+    ggplot2
 LazyLoad: yes
 Collate:
     'MeltHistos.R'
     'wcUtils-package.R'
     'PrepareToCrawl.R'
     'CreateWCFilt.R'
+    'plot_HourlyTimeline.R'

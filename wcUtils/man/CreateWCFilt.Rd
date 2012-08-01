@@ -2,8 +2,8 @@
 \alias{CreateWCFilt}
 \title{CreateWCFilt}
 \usage{
-  CreateWCFilt(tagdata, projectid, dateformat = "Y-M-D
-  h:m:s", minclass = "B")
+  CreateWCFilt(tagdata, projectid,
+    dateformat = "Y-M-D h:m:s", minclass = "B")
 }
 \arguments{
   \item{tagdata}{a dataframe with columns 'Name', 'Ptt',

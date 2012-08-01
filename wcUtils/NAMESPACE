@@ -1,4 +1,6 @@
 export(CreateWCFilt)
 export(MeltHistos)
 export(PrepareToCrawl)
+export(plot_HourlyTimeline)
+import(ggplot2)
 import(reshape)
