@@ -88,6 +88,12 @@ MeltHistos <- function(d,hist_type="Percent") {
     DataDateTime=seq(from=ll[[j]]$start,to=ll[[j]]$finish,by=diff)))
   }
   fulldata <- merge(fulldata,drydata,all.x=TRUE)
+  if(hist_type == 'TwentyMinTimeline') {
+    class(fulldata) <- c(class(fulldata),'HistoTwentyMin')
+  }
+  if(hist_type == 'Percent') {
+    class(fulldata) <- c(class(fulldata),'HistoPercentDry')
+  }
   return(fulldata)
 }
 
