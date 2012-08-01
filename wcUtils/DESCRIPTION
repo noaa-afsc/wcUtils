@@ -24,4 +24,4 @@ Collate:
     'wcUtils-package.R'
     'PrepareToCrawl.R'
     'CreateWCFilt.R'
-    'plot_HourlyTimeline.R'
+    'autoplot.HistoPercentDry.R'
