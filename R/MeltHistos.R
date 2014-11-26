@@ -46,20 +46,23 @@
 #' example_csv<-system.file("sealdata.csv", package = "wcUtils") 
 #' drytimes<-MeltHistos(d=example_csv,hist_type='Percent')
 MeltHistos <- function(d,hist_type="Percent") {
-  require(reshape)
-  histos<-read.csv(d)
+  library(reshape)
+  library(dplyr)
+  library(lubridate)
+  library(data.table)
+  histos<-d
+  histos$Date <- parse_date_time(histos$Date,"%H%M%S %d%m%y")
   histos_sub<-histos[histos$HistType == hist_type,]
-  histos_sub<-histos_sub[as.POSIXlt(as.POSIXct(strptime(histos_sub$Date, "%Y-%m-%d %H:%M:%S")))$hour == 0,]
+  histos_sub<-subset(histos_sub,hour(Date) == 0)
   ind <- sapply(histos_sub, is.factor)
   histos_sub[ind] <- lapply(histos_sub[ind], "[", drop=TRUE)
   if(hist_type == 'Percent') {
     bins<-list(variable=paste("Bin",1:24,sep=""),hrs=0:23)
     bins<-as.data.frame(bins)
-    drydata<-histos_sub[,c(1,7,16:39)]
+    drydata<-dplyr::select(histos_sub,c(1,7,16:39))
     drydata<-melt(drydata,id.vars=1:2)
     drydata<-merge(drydata,bins)
-    drydata$DateTime<-as.POSIXct(strptime(drydata$Date, "%Y-%m-%d %H:%M:%S",
-                                          tz="UTC"),tz="UTC") + drydata$hrs*3600
+    drydata$DateTime<-drydata$Date + drydata$hrs*3600
     drydata<-drydata[,c(2,6,4)]
     names(drydata)<-c("DeployID","DataDateTime","PercentDry")
   }
@@ -75,10 +78,11 @@ MeltHistos <- function(d,hist_type="Percent") {
       names(drydata)<-c("DeployID","DataDateTime","PercentDry")
   }
   drydata<-drydata[with(drydata, order(DeployID, DataDateTime)), ]
+  drydata$DeployID <-as.factor(drydata$DeployID)
   ll <- vector(mode="list",length=length(levels(drydata$DeployID)))
   for(i in 1:length(levels(drydata$DeployID))) {
-    ll[[i]] <- list(start=min(drydata$DataDateTime[drydata$DeployID==levels(drydata$DeployID[i])]),
-                    finish=max(drydata$DataDateTime[drydata$DeployID==levels(drydata$DeployID[i])]))
+    ll[[i]] <- list(start=min(drydata$DataDateTime[drydata$DeployID==levels(drydata$DeployID)[i]]),
+                    finish=max(drydata$DataDateTime[drydata$DeployID==levels(drydata$DeployID)[i]]))
   }
   names(ll) <- levels(drydata$DeployID)
   fulldata <- NULL

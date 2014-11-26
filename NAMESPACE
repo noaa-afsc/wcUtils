@@ -1,6 +1,6 @@
+export(autoplot.HistoPercentDry)
 export(CreateWCFilt)
 export(MeltHistos)
 export(PrepareToCrawl)
-export(autoplot.HistoPercentDry)
 import(ggplot2)
 import(reshape)
