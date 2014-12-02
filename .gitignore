@@ -1,9 +1,3 @@
-*.RData
 .Rproj.user
-*.Rproj
-*.tar
-*.gz
-*.zip
 .Rhistory
-*.Rproj
-*.tgz
+.RData

@@ -1,6 +1,1 @@
-export(autoplot.HistoPercentDry)
-export(CreateWCFilt)
-export(MeltHistos)
-export(PrepareToCrawl)
-import(ggplot2)
-import(reshape)
+exportPattern("^[^\\.]")

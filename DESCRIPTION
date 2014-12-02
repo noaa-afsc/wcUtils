@@ -1,27 +1,17 @@
 Package: wcUtils
-Type: Package
-Title: Makes life easier for those working with Wildlife
-    Computers data
+Title: Utilities to Access the Wildlife Computers Data Portal API
 Version: 0.1
-Date: 2011-10-10
-Author: Josh M London
-Maintainer: Josh M London <josh.london@noaa.gov>
-Description: The aim of `wcUtils` is to make your life as
-    an analyst of Wildlife Computers data a wee bit easier.
-    You do need a rudimentary understanding of R and the
-    package does require the R package 'reshape' (available
-    on CRAN). At this point, the purpose of \code{wcUtils}
-    is to make your life easier, not to do the analysis for
-    you. As such, the tools focus more on manipulation of
-    data and less on analysis.
-License: open
-Depends:
-    reshape,
-    ggplot2
-LazyLoad: yes
-Collate:
-    'MeltHistos.R'
-    'wcUtils-package.R'
-    'PrepareToCrawl.R'
-    'CreateWCFilt.R'
-    'autoplot.HistoPercentDry.R'
+Authors@R: "Josh M London <josh.london@noaa.gov> [aut, cre]"
+Description: This package provides basic access and capabilities for interacting with
+  and downloading data from the Wildilfe Computers Data Portal AIP. Where appropriate
+  functions to specify data types and tidy the data are employed.
+Depends: R (>= 3.1.1)
+License: Public Domain
+LazyData: true
+Imports: lubridate,
+    tidyr,
+    dplyr,
+    httr,
+    digest,
+    data.table,
+    XML
