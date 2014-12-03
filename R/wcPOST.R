@@ -40,6 +40,6 @@ wcPOST <- function(wc.key=getOption("wcAccessKey"),
   
   r <- httr::POST("http://my.wildlifecomputers.com/services/",
             body=params,
-            add_headers("X-Access" = wc.key,"X-Hash" = x.hash))
+            httr::add_headers("X-Access" = wc.key,"X-Hash" = x.hash))
   return(r)
 }
