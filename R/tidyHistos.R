@@ -22,7 +22,7 @@ tidyHistos <- function(histos,timelines=TRUE) {
     if(nrow(t)==1) {
       type <- as.character(t$histtype[1])
     } else if(nrow(t)>1) {
-      type <- as.character(subset(t,n=max(n))$histtype)
+      type <- as.character(subset(t,n=max(n))$histtype[1])
     }
     if(type=="Percent") {
       histos_sub <- subset(histos,histtype == type)

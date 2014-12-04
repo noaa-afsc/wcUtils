@@ -10,6 +10,7 @@
 #' @param project valid project name (required)
 #'   
 #' @return returns a vector of deployment IDs
+#' @export
 wcGetProjectIDs <- function(xml_content,project=NULL) {
   if(class(xml_content) == "response") {
     warning('wcPOST response object provided, extracting content to xml',call.=FALSE)
@@ -19,7 +20,7 @@ wcGetProjectIDs <- function(xml_content,project=NULL) {
     stop("Error: you must provide a project name")
   }
   valid_project <- 
-    XML::getNodeSet(doc,paste("boolean(//data/deployment/labels/category",
+    XML::getNodeSet(xml_content,paste("boolean(//data/deployment/labels/category",
                          "/name[text() = 'Project'])",sep=""))
   if(!valid_project) {
     stop("Error: no 'Project' label found")
@@ -28,6 +29,6 @@ wcGetProjectIDs <- function(xml_content,project=NULL) {
                  "name[text() = 'Project']/../label[text() = '",
                   project,
                  "']/../../../id",sep="")
-  ids <- XML::xpathSApply(xml_content,xpath,xmlValue)
+  ids <- XML::xpathSApply(xml_content,xpath,XML::xmlValue)
   return(ids)
 }

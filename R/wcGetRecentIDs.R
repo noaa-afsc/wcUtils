@@ -9,6 +9,7 @@
 #' @param days integer value specifying the time window from \code{now()} in days
 #'   
 #' @return returns a vector of deployment IDs
+#' @export
 wcGetRecentIDs <- function(xml_content,days=14) {
   if(class(xml_content) == "response") {
     warning('wcPOST response object provided, extracting content to xml',call.=FALSE)
@@ -19,6 +20,6 @@ wcGetRecentIDs <- function(xml_content,days=14) {
                  "[number() > number(",
                  start_epoch,
                  ")]/../../id",sep="")
-  ids <- XML::xpathSApply(xml_content,xpath,xmlValue)
+  ids <- XML::xpathSApply(xml_content,xpath,XML::xmlValue)
   return(ids)
 }

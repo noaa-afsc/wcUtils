@@ -18,31 +18,62 @@
 #'   
 #' @return a list of data frames with up to 5 names elemnts (locations, behavior, histograms,
 #'   status,[timelines])
+#' @importFrom magrittr %>%
+#' @export
 wcGetDownload <- function(id, tidy=TRUE) {
   download_params <- paste("action=download_deployment&id=",id,sep="")
   r <- wcPOST(params=download_params)
   temp_file <- tempfile()
-  writeBin(content(r, "raw"), temp_file)
+  writeBin(httr::content(r, "raw"), temp_file)
   temp_path <- tempfile()
   dir.create(temp_path)
-  unzip(temp_file, exdir=temp_path)
+  unzip.fail <- try(unzip(temp_file, exdir=temp_path))
+  while(inherits(unzip.fail, "try-error")){
+    cat("error unzipping: ",id,"\n")
+    unlink(temp_file)
+    unlink(temp_path)
+    temp_file <- tempfile()
+    writeBin(httr::content(r, "raw"), temp_file)
+    temp_path <- tempfile()
+    dir.create(temp_path)
+    unzip.fail <- try(unzip(temp_file, exdir=temp_path))
+  }
   loc_file <- list.files(temp_path,full.names=TRUE,pattern="*-Locations.csv")
   behav_file <- list.files(temp_path,full.names=TRUE,pattern='*-Behavior.csv')
   histo_file <- list.files(temp_path,full.names=TRUE,pattern='*-Histos.csv')
   status_file <- list.files(temp_path,full.names=TRUE,pattern='*-Status.csv')
   df_list <- vector("list")
+  if(length(loc_file)==1){
   df_list$locations <- read.csv(loc_file,stringsAsFactors=FALSE)
+  }
+  if(length(behav_file)==1) {
   df_list$behavior <- read.csv(behav_file,stringsAsFactors=FALSE)
+  }
+  if(length(histo_file)==1) {
   df_list$histos <- read.csv(histo_file,stringsAsFactors=FALSE)
+  }
+  if(length(status_file)==1) { 
   df_list$status <- read.csv(status_file,stringsAsFactors=FALSE)
-  for(i in c("locations","behavior","histos","status")) {
-    names(df_list[[i]]) <- tolower(names(df_list[[i]]))
   }
   for(i in c("locations","behavior","histos","status")) {
-    df_list[[i]]$ptt <- factor(df_list[[i]]$ptt,
-                               levels=as.character(sort(as.numeric(unique(df_list[[i]]$ptt)))))
-    df_list[[i]]$deployid <- factor(df_list[[i]]$deployid,
-                               levels=as.character(sort(as.numeric(unique(df_list[[i]]$deployid)))))
+    if(!is.null(df_list[[i]])) {
+      names(df_list[[i]]) <- tolower(names(df_list[[i]]))
+    }
+  }
+  for(i in c("locations","behavior","histos","status")) {
+    if(!is.null(df_list[[i]])) {
+      df_list[[i]]$ptt <- factor(df_list[[i]]$ptt,
+                                 levels=as.character(sort(as.numeric(unique(df_list[[i]]$ptt)))))
+      df_list[[i]]$deployid <- factor(df_list[[i]]$deployid,
+                                      levels=as.character(sort(
+                                        as.numeric(unique(df_list[[i]]$deployid)))))
+    }
+  }
+  if(!is.null(df_list$behavior)) {
+    df_list$behavior <- df_list$behavior %>%
+      dplyr::mutate(
+        start = lubridate::parse_date_time(start,"%H:%M:%S d-b-Y"),
+        end = lubridate::parse_date_time(end,"%H:%M:%S d-b-Y"))
   }
   df_list$locations <- df_list$locations %>% 
     dplyr::mutate(date = lubridate::parse_date_time(date,"%H:%M:%S d-b-Y",tz="UTC")) %>%
@@ -56,8 +87,10 @@ wcGetDownload <- function(id, tidy=TRUE) {
         "error_semi_major_axis",
         "error_semi_minor_axis",
         "error_ellipse_orientation"))
-  if(tidy==TRUE) {
+  if(tidy==TRUE & !is.null(df_list$histos)) {
     df_list$timelines <- tidyHistos(df_list$histos)
   }
+  unlink(temp_path)
+  unlink(temp_file)
   return(df_list)
 }

@@ -8,8 +8,9 @@
 #' @param xpath additional customization possible by passing an xpath statement
 #' 
 #' @return returns a vector of deployment IDs
+#' @export
 wcGetIDs <- function(xml_content,xpath=NULL) {
-  if(class(xml_content) == "response") {
+  if(any(class(xml_content) == "response")) {
     warning('wcPOST response object provided, extracting content to xml',call.=FALSE)
     xml_content <- httr::content(xml_content)
   }
@@ -19,6 +20,6 @@ wcGetIDs <- function(xml_content,xpath=NULL) {
   } else {
     xpath <- "//data/deployment/id"
   }
-  ids <- XML::xpathSApply(xml_content,xpath,xmlValue)
+  ids <- XML::xpathSApply(xml_content,xpath,XML::xmlValue)
   return(ids)
 }
