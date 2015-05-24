@@ -4,11 +4,11 @@ Version: 0.1
 Authors@R: "Josh M London <josh.london@noaa.gov> [aut, cre]"
 Description: This package provides basic access and capabilities for
     interacting with and downloading data from the Wildilfe Computers Data
-    Portal AIP. Where appropriate functions to specify data types and tidy the
+    Portal API. Where appropriate functions to specify data types and tidy the
     data are employed.
 Depends:
     R (>= 3.1.1)
-License: Public Domain
+License: file LICENSE
 LazyData: true
 Imports:
     lubridate,
