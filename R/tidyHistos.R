@@ -32,7 +32,7 @@ tidyHistos <- function(histos,timelines=TRUE) {
       timeline <- histos_sub %>%
         tidyr::gather(bin,percent_dry, starts_with('bin')) %>%
         merge(bins) %>%
-        dplyr::mutate(datadatetime = date + hours(hour)) %>%
+        dplyr::mutate(datadatetime = date + lubridate::hours(hour)) %>%
         dplyr::select(one_of(c("deployid","datadatetime","percent_dry"))) %>%
         dplyr::arrange(deployid,datadatetime)
     }
