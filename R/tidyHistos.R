@@ -26,7 +26,7 @@ tidyHistos <- function(histos,timelines=TRUE) {
     }
     if(type=="Percent") {
       histos_sub <- subset(histos,histtype == type)
-      histos_sub <- subset(histos_sub,hour(date) == 0)
+      histos_sub <- subset(histos_sub,lubridate::hour(date) == 0)
       bins<-list(bin=paste("bin",1:24,sep=""),hour=0:23)
       bins<-as.data.frame(bins)
       timeline <- histos_sub %>%
