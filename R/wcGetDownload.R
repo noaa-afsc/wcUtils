@@ -17,7 +17,7 @@
 #' @param tidy whether to tidy the histogram data stream and create a timelines output
 #'   
 #' @return a list of data frames with up to 5 names elemnts (locations, behavior, histograms,
-#'   status,[timelines])
+#'   status,timelines)
 #' @importFrom magrittr %>%
 #' @export
 wcGetDownload <- function(id, tidy=TRUE) {
@@ -66,7 +66,7 @@ wcGetDownload <- function(id, tidy=TRUE) {
   }
 
   if(tidy==TRUE & !is.null(df_list$histos)) {
-    df_list$timelines <- wcUtils::tidyHistos(df_list$histos)
+    df_list$timelines <- wcUtils::tidyTimelines(df_list$histos)
   }
   unlink(temp_path)
   unlink(temp_file)
