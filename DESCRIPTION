@@ -12,6 +12,7 @@ License: file LICENSE
 LazyData: true
 Imports:
     lubridate,
+    readr,
     magrittr,
     tidyr,
     dplyr,

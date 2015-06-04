@@ -10,12 +10,8 @@
 #' @param timelines boolean value to specify whether timelines should be processed
 #' 
 #' @return a data frame with tidy, narrow data structure and actual time periods in place of bins
+#' @export
 tidyHistos <- function(histos,timelines=TRUE) {
-  histos$date <- lubridate::parse_date_time(histos$date,"%H%M%S %d%m%y",tz="UTC")
-  histos$source <- factor(histos$source)
-  histos$instr <- factor(histos$instr)
-  histos$histtype <- factor(histos$histtype)
-  histos$locationquality <- factor(histos$locationquality)
   if(timelines==TRUE) {
     types <- dplyr::group_by(histos,histtype)
     t <- dplyr::summarise(types, n=n())

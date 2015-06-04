@@ -44,51 +44,29 @@ wcGetDownload <- function(id, tidy=TRUE) {
   status_file <- list.files(temp_path,full.names=TRUE,pattern='*-Status.csv')
   df_list <- vector("list")
   if(length(loc_file)==1){
-  df_list$locations <- read.csv(loc_file,stringsAsFactors=FALSE)
+  df_list$locations <- wcUtils::read_locs(loc_file)
   }
   if(length(behav_file)==1) {
-  df_list$behavior <- read.csv(behav_file,stringsAsFactors=FALSE)
+  df_list$behavior <- wcUtils::read_behav(behav_file)
   }
   if(length(histo_file)==1) {
-  df_list$histos <- read.csv(histo_file,stringsAsFactors=FALSE)
+  df_list$histos <- wcUtils::read_histos(histo_file)
   }
-  if(length(status_file)==1) { 
-  df_list$status <- read.csv(status_file,stringsAsFactors=FALSE)
-  }
-  for(i in c("locations","behavior","histos","status")) {
-    if(!is.null(df_list[[i]])) {
-      names(df_list[[i]]) <- tolower(names(df_list[[i]]))
+  if(length(status_file)==1) {
+    test <- try(readr::read_csv(status_file),silent = TRUE)
+    if(!inherits(test,"try-error")) {
+      df_list$status <- readr::read_csv(
+        status_file)
+    }
+    else {
+      df_list$status <- readr::read_csv(
+        status_file,skip=1
+      )
     }
   }
-  for(i in c("locations","behavior","histos","status")) {
-    if(!is.null(df_list[[i]])) {
-      df_list[[i]]$ptt <- factor(df_list[[i]]$ptt,
-                                 levels=as.character(sort(as.numeric(unique(df_list[[i]]$ptt)))))
-      df_list[[i]]$deployid <- factor(df_list[[i]]$deployid,
-                                      levels=as.character(sort(
-                                        as.numeric(unique(df_list[[i]]$deployid)))))
-    }
-  }
-  if(!is.null(df_list$behavior)) {
-    df_list$behavior <- df_list$behavior %>%
-      dplyr::mutate(
-        start = lubridate::parse_date_time(start,"%H:%M:%S d-b-Y"),
-        end = lubridate::parse_date_time(end,"%H:%M:%S d-b-Y"))
-  }
-  df_list$locations <- df_list$locations %>% 
-    dplyr::mutate(date = lubridate::parse_date_time(date,"%H:%M:%S d-b-Y",tz="UTC")) %>%
-    data.table::setnames(
-      c("date","error.radius",
-        "error.semi.major.axis",
-        "error.semi.minor.axis",
-        "error.ellipse.orientation"),
-      c("datadatetime",
-        "error_radius",
-        "error_semi_major_axis",
-        "error_semi_minor_axis",
-        "error_ellipse_orientation"))
+
   if(tidy==TRUE & !is.null(df_list$histos)) {
-    df_list$timelines <- tidyHistos(df_list$histos)
+    df_list$timelines <- wcUtils::tidyHistos(df_list$histos)
   }
   unlink(temp_path)
   unlink(temp_file)
