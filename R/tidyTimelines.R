@@ -7,7 +7,6 @@
 #' This is implemented, here, with the timeline data. For timeline data, tag 'dryness' is provided as either a percentage of each hour the tag was dry or as a binary (1 or 0) value representing whether a tag was dry for a majority of a given 20-minute period. For both of these situations, the values for the 'bin' columns are predictable and we can, in addition to tidying the data structure, also turn the bin values into actual time periods
 #' 
 #' @param histos an un-tidy'd histogram data frame
-#' @param timelines boolean value to specify whether timelines should be processed
 #' 
 #' @return a data frame with tidy, narrow data structure and actual time periods in place of bins
 #' @export
