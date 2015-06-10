@@ -3,7 +3,7 @@
 #' @param histo_file file path or file connection to a *-Histos.csv file
 #' @param to_lower whether to convert the column names to lower case
 #'
-#' @return a data frame
+#' @return a list of two data frames
 #' @export
 read_histos <- function(histo_file,to_lower = TRUE) {
   histo_lines <- readr::read_lines(file = histo_file)
@@ -87,5 +87,5 @@ read_histos <- function(histo_file,to_lower = TRUE) {
   coltypes_list <- c(coltypes_list,bintypes)
   
   histos_df <- readr::type_convert(histos_df,col_types = coltypes_list)
-  return(histos_df)
+  return(list(histos=histos_df,limits=histo_limits))
 }

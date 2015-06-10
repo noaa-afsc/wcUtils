@@ -7,7 +7,7 @@
 tidyTimelines(histos)
 }
 \arguments{
-\item{histos}{an un-tidy'd histogram data frame}
+\item{histos}{a list returned from \code{read_histos}}
 }
 \value{
 a data frame with tidy, narrow data structure and actual time periods in place of bins

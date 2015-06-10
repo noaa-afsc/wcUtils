@@ -12,7 +12,7 @@ read_histos(histo_file, to_lower = TRUE)
 \item{to_lower}{whether to convert the column names to lower case}
 }
 \value{
-a data frame
+a list of two data frames
 }
 \description{
 Parse a *-Histos.csv files into a proper data.frame
