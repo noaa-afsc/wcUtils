@@ -13,7 +13,7 @@ wcGetDownload(id, tidy = TRUE)
 }
 \value{
 a list of data frames with up to 5 names elemnts (locations, behavior, histograms,
-  status,[timelines])
+  status,timelines)
 }
 \description{
 \code{wcGetDownload} will return a list of data frames containing deployment data

@@ -63,25 +63,25 @@ read_histos <- function(histo_file,to_lower = TRUE) {
   #create our list of desired data types
   
   coltypes_list <- list(
-    deployid = col_character(),
-    ptt = col_character(),
-    depthsensor = col_numeric(),
-    source = col_character(),
-    instr = col_character(),
-    histtype = col_character(),
-    date = col_datetime(format = "%H:%M:%S %d-%b-%Y",tz = "UTC"),
-    time_offset = col_numeric(),
-    count = col_integer(),
-    locationquality = col_character(),
-    latitude = col_numeric(),
-    longitude = col_numeric(),
-    numbins = col_integer(),
-    sum = col_numeric()
+    deployid = readr::col_character(),
+    ptt = readr::col_character(),
+    depthsensor = readr::col_numeric(),
+    source = readr::col_character(),
+    instr = readr::col_character(),
+    histtype = readr::col_character(),
+    date = readr::col_datetime(format = "%H:%M:%S %d-%b-%Y",tz = "UTC"),
+    time_offset = readr::col_numeric(),
+    count = readr::col_integer(),
+    locationquality = readr::col_character(),
+    latitude = readr::col_numeric(),
+    longitude = readr::col_numeric(),
+    numbins = readr::col_integer(),
+    sum = readr::col_numeric()
   )
   
   bintypes <-
     lapply(1:72,function(x)
-      eval(parse(text = "col_numeric()")))
+      eval(parse(text = "readr::col_numeric()")))
   names(bintypes) <- rep(paste0("bin",1:72))
   
   coltypes_list <- c(coltypes_list,bintypes)
