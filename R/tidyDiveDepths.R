@@ -11,8 +11,10 @@
 #' @return a data frame with tidy, narrow data structure and actual dive depths bin limits (when provided)
 #' @export
 tidyDiveDepths <- function(histos) {
+  limits <- dplyr::filter(histos$limits,histtype=='DiveDepthLIMITS') %>% 
+    dplyr::select(-histtype) %>% 
+    tidyr::gather(bin,bin_depth_limit,starts_with('bin'))
   histos <- histos$histos
-  limits <- histos$limits
   types <- dplyr::group_by(histos,histtype)
   t <- dplyr::summarise(types, n = n())
   if (all(t != c('DiveDepth'))) {
@@ -28,5 +30,8 @@ tidyDiveDepths <- function(histos) {
     tidyr::gather(bin,num_dives, starts_with('bin')) %>%
     dplyr::rename(datadatetime=date) %>% 
     dplyr::select(one_of(c("deployid","datadatetime","bin","num_dives"))) %>%
-    dplyr::arrange(deployid,datadatetime,bin)
+    dplyr::inner_join(limits) %>% 
+    dplyr::select(deployid,datadatetime,num_dives,bin_depth_limit,bin) %>% 
+    dplyr::mutate(bin_depth_limit=format_bins(bin_depth_limit)) %>% 
+    dplyr::arrange(deployid,datadatetime,bin) 
 }

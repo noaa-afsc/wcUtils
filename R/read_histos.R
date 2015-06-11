@@ -46,7 +46,18 @@ read_histos <- function(histo_file,to_lower = TRUE) {
                                       t(
                                         data.frame(x,row.names = NULL,stringsAsFactors = FALSE)
                                       )))
+  histo_limits <- lapply(histo_limits,function(x)
+    strsplit(x,','))
+  
+  histo_limits <- do.call("rbind", lapply(histo_limits,
+                                    function(x)
+                                      t(
+                                        data.frame(x,row.names = NULL,stringsAsFactors = FALSE)
+                                      )))
+  
   rownames(histos) <- NULL
+  rownames(histo_limits) <- NULL
+  
   #check if histos_df and histo_colnames have same number of columns; fix if needed
   if (ncol(histos) != length(histo_colnames)) {
     #we will presume that histos_df is short columns
@@ -59,6 +70,36 @@ read_histos <- function(histo_file,to_lower = TRUE) {
   if (to_lower == TRUE) {
     colnames(histos_df) <- tolower(colnames(histos_df))
   }
+  
+  #check if histos_limits and histo_colnames have same number of columns; fix if needed
+  if (ncol(histo_limits) != length(histo_colnames)) {
+    #we will presume that histos_limits is short columns
+    col2add <- length(histo_colnames) - ncol(histo_limits)
+    m <- matrix(data = "",nrow = nrow(histo_limits),ncol = col2add)
+    histo_limits <- cbind(histo_limits,m)
+  }
+  histo_limits <- data.frame(histo_limits,stringsAsFactors = FALSE)
+  colnames(histo_limits) <- sub(" ", "_", histo_colnames)
+  if (to_lower == TRUE) {
+    colnames(histo_limits) <- tolower(colnames(histo_limits))
+  }
+  
+  histo_limits <- histo_limits %>% 
+    dplyr::select(-one_of(c('deployid',
+                            'ptt',
+                            'depthsensor',
+                            'source',
+                            'instr',
+                            'date', 
+                            'time_offset', 
+                            'count', 
+                            'badtherm', 
+                            'locationquality', 
+                            'latitude', 
+                            'longitude',
+                            'numbins',
+                            'sum'))) %>% 
+    .[, colSums(. != "") != 0]
   
   #create our list of desired data types
   
