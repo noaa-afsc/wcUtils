@@ -127,6 +127,11 @@ read_histos <- function(histo_file,to_lower = TRUE) {
   
   coltypes_list <- c(coltypes_list,bintypes)
   
-  histos_df <- readr::type_convert(histos_df,col_types = coltypes_list)
+  strip_quotes <- function(s) gsub("\"","",s)
+  
+  histos_df <- readr::type_convert(histos_df,col_types = coltypes_list) %>% 
+    rowwise() %>% 
+    mutate(deployid = strip_quotes(deployid))
+    
   return(list(histos=histos_df,limits=histo_limits))
 }
