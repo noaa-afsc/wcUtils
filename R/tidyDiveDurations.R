@@ -17,7 +17,7 @@ tidyDiveDurations <- function(histos) {
   histos <- histos$histos
   types <- dplyr::group_by(histos,histtype)
   t <- dplyr::summarise(types, n = n())
-  if (all(t != c('DiveDuration'))) {
+  if (all(t$histtype != c('DiveDuration'))) {
     stop('No DiveDuration data found',call. = FALSE)
   }
   if(nrow(limits)<1) {

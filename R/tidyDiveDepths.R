@@ -17,7 +17,7 @@ tidyDiveDepths <- function(histos) {
   histos <- histos$histos
   types <- dplyr::group_by(histos,histtype)
   t <- dplyr::summarise(types, n = n())
-  if (all(t != c('DiveDepth'))) {
+  if (all(t$histtype != c('DiveDepth'))) {
     stop('No DiveDepth data found',call. = FALSE)
   }
   if(nrow(limits)<1) {

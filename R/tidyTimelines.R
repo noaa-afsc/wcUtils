@@ -12,13 +12,13 @@
 #' @export
 tidyTimelines <- function(histos) {
     histos <- histos$histos
-    types <- dplyr::group_by(histos,histtype)
-    t <- dplyr::summarise(types, n=n())
-    if (!t %in% c('Percent','TwentyMinTimelines')) {
-      stop('No timeline histogram types found',call.=FALSE)
-    }
     histos <- dplyr::filter(histos,
                             histtype %in% c('Percent','TwentyMinTimelines'))
+    types <- dplyr::group_by(histos,histtype)
+    t <- dplyr::summarise(types, n=n())
+    if (all(!t$histtype %in% c('Percent','TwentyMinTimelines'))) {
+      stop('No timeline histogram types found',call.=FALSE)
+    }
     if(nrow(t)==1) {
       type <- as.character(t$histtype[1])
     } else if(nrow(t)>1) {
