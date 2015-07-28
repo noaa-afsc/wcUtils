@@ -11,21 +11,25 @@
 #' @return a data frame with tidy, narrow data structure and actual time-at-depth bin limits (when provided)
 #' @export
 tidyTimeAtDepth <- function(histos) {
+  if(!is.null(histos$limits)) {
   limits <- dplyr::filter(histos$limits,histtype=='TADLIMITS') %>% 
     dplyr::select(-histtype) %>% 
     tidyr::gather(bin,bin_depth_limit,starts_with('bin'))
+  }
   histos <- histos$histos
   types <- dplyr::group_by(histos,histtype)
   t <- dplyr::summarise(types, n = n())
   if (all(t$histtype != c('TAD'))) {
-    stop('No Time-At-Depth data found',call. = FALSE)
+    warning('No Time-At-Depth data found',call. = FALSE)
+    return(NULL)
   }
-  if(nrow(limits)<1) {
+  if(nrow(limits)<1 | is.null(histos$limits)) {
     warning("No TAD limits found. Will use generic bin labels",call.=FALSE)
   }
   
   histos <- dplyr::filter(histos,
                           histtype=='TAD')
+  if(nrow(limits)>=1 | !is.null(histos$limits)) {
   diveduration <- histos %>%
     tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
     dplyr::rename(datadatetime=date) %>% 
@@ -34,4 +38,13 @@ tidyTimeAtDepth <- function(histos) {
     dplyr::select(deployid,datadatetime,pct_tad,bin_depth_limit,bin) %>% 
     dplyr::mutate(bin_depth_limit=format_bins(bin_depth_limit)) %>% 
     dplyr::arrange(deployid,datadatetime,bin) 
+  }
+  if(nrow(limits)<1 | is.null(histos$limits)) {
+    diveduration <- histos %>%
+      tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
+      dplyr::rename(datadatetime=date) %>% 
+      dplyr::select(one_of(c("deployid","datadatetime","bin","pct_tad"))) %>%
+      dplyr::select(deployid,datadatetime,pct_tad,bin) %>% 
+      dplyr::arrange(deployid,datadatetime,bin) 
+  }
 }

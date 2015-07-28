@@ -20,7 +20,7 @@
 #'   status,timelines)
 #' @importFrom magrittr %>%
 #' @export
-wcGetDownload <- function(id, tidy=TRUE) {
+wcGetDownload <- function(id) {
   download_params <- paste("action=download_deployment&id=",id,sep="")
   r <- wcPOST(params=download_params)
   temp_file <- tempfile()
@@ -65,9 +65,6 @@ wcGetDownload <- function(id, tidy=TRUE) {
     }
   }
 
-  if(tidy==TRUE & !is.null(df_list$histos)) {
-    df_list$timelines <- wcUtils::tidyTimelines(df_list$histos)
-  }
   unlink(temp_path)
   unlink(temp_file)
   return(df_list)

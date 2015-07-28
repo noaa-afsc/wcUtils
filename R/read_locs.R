@@ -57,24 +57,34 @@ read_locs <- function(loc_file,to_lower = TRUE) {
   #create our list of desired data types
   
   coltypes_list <- list(
-    deployid = col_character(),
-    ptt = col_character(),
-    instr = col_character(),
-    date = col_datetime(format = "%H:%M:%S %d-%b-%Y",tz = "UTC"),
-    type = col_character(),
-    quality = col_character(),
-    latitude = col_numeric(),
-    longitude = col_numeric(),
-    error_radius = col_numeric(),
-    error_semimajor_axis = col_numeric(),
-    error_semiminor_axis = col_numeric(),
-    error_ellipse_orientation = col_numeric(),
-    offset = col_numeric(),
-    offset_orientation = col_numeric(),
-    gpe_msd = col_numeric(),
-    gpe_u = col_numeric(),
-    comment = col_character()
+    deployid = readr::col_character(),
+    ptt = readr::col_character(),
+    instr = readr::col_character(),
+    date = readr::col_datetime(format = "%H:%M:%S %d-%b-%Y",tz = "UTC"),
+    type = readr::col_character(),
+    quality = readr::col_character(),
+    latitude = readr::col_numeric(),
+    longitude = readr::col_numeric(),
+    error_radius = readr::col_numeric(),
+    error_semimajor_axis = readr::col_numeric(),
+    error_semiminor_axis = readr::col_numeric(),
+    error_ellipse_orientation = readr::col_numeric(),
+    offset = readr::col_numeric(),
+    offset_orientation = readr::col_numeric(),
+    gpe_msd = readr::col_numeric(),
+    gpe_u = readr::col_numeric(),
+    comment = readr::col_character()
   )
-  locs_df <- readr::type_convert(locs_df,col_types = coltypes_list)
+  
+  strip_quotes <- function(s) gsub("\"","",s)
+  
+  locs_df <- readr::type_convert(locs_df,col_types = coltypes_list)  %>% 
+    dplyr::rowwise() %>% 
+    dplyr::mutate(deployid = strip_quotes(deployid)) %>% 
+    dplyr::group_by(deployid) %>% 
+    dplyr::arrange(deployid,date) %>%
+    dplyr::rename(date_time=date)
+
+  
   return(locs_df)
 }

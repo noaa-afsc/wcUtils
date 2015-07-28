@@ -72,12 +72,14 @@ read_histos <- function(histo_file,to_lower = TRUE) {
   }
   
   #check if histos_limits and histo_colnames have same number of columns; fix if needed
-  if (ncol(histo_limits) != length(histo_colnames)) {
+  if (!is.null(histo_limits)) {
+    if (ncol(histo_limits) != length(histo_colnames)) {
     #we will presume that histos_limits is short columns
     col2add <- length(histo_colnames) - ncol(histo_limits)
     m <- matrix(data = "",nrow = nrow(histo_limits),ncol = col2add)
     histo_limits <- cbind(histo_limits,m)
   }
+  
   histo_limits <- data.frame(histo_limits,stringsAsFactors = FALSE)
   colnames(histo_limits) <- sub(" ", "_", histo_colnames)
   if (to_lower == TRUE) {
@@ -100,7 +102,7 @@ read_histos <- function(histo_file,to_lower = TRUE) {
                             'numbins',
                             'sum'))) %>% 
     .[, colSums(. != "") != 0]
-  
+  }
   #create our list of desired data types
   
   coltypes_list <- list(
