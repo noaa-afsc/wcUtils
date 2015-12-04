@@ -5,7 +5,7 @@
 #'
 #' @return a data frame
 #' @export
-read_gps <- function(gps_file,to_lower = TRUE) {
+read_fastGPS <- function(gps_file,to_lower = TRUE) {
   gps_lines <- readr::read_lines(file = gps_file)
   
   blank_rows <- function(gps_list) {

@@ -124,7 +124,7 @@ read_histos <- function(histo_file,to_lower = TRUE) {
   
   bintypes <-
     lapply(1:72,function(x)
-      eval(parse(text = "readr::col_numeric()")))
+      eval(parse(text = "readr::col_number()")))
   names(bintypes) <- rep(paste0("bin",1:72))
   
   coltypes_list <- c(coltypes_list,bintypes)

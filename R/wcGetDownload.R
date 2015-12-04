@@ -38,13 +38,17 @@ wcGetDownload <- function(id) {
     dir.create(temp_path)
     unzip.fail <- try(unzip(temp_file, exdir=temp_path))
   }
-  loc_file <- list.files(temp_path,full.names=TRUE,pattern="*-Locations.csv")
-  behav_file <- list.files(temp_path,full.names=TRUE,pattern='*-Behavior.csv')
-  histo_file <- list.files(temp_path,full.names=TRUE,pattern='*-Histos.csv')
-  status_file <- list.files(temp_path,full.names=TRUE,pattern='*-Status.csv')
+  loc_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Locations\\.csv$")
+  fastgps_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-\\d+-FastGPS\\.csv$")
+  behav_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Behavior\\.csv$")
+  histo_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Histos\\.csv$")
+  status_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Status\\.csv$")
   df_list <- vector("list")
   if(length(loc_file)==1){
   df_list$locations <- wcUtils::read_locs(loc_file)
+  }
+  if(length(fastgps_file)==1){
+    df_list$fastgps <- wcUtils::read_fastGPS(fastgps_file)
   }
   if(length(behav_file)==1) {
   df_list$behavior <- wcUtils::read_behav(behav_file)
