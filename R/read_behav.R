@@ -60,23 +60,23 @@ read_behav <- function(behav_file,to_lower = TRUE) {
   #create our list of desired data types
   
   coltypes_list <- list(
-    deployid = col_character(),
-    ptt = col_character(),
-    depthsensor = col_character(),
-    source = col_character(),
-    instr = col_character(),
-    count = col_integer(),
-    start = col_datetime(format = "%H:%M:%S %d-%b-%Y",tz = "UTC"),
-    end = col_datetime(format = "%H:%M:%S %d-%b-%Y", tz = "UTC"),
-    what = col_character(),
-    number = col_integer(),
-    shape = col_character(),
-    depthmin = col_numeric(),
-    depthmax = col_numeric(),
-    durationmin = col_numeric(),
-    durationmax = col_numeric(),
-    shallow = col_integer(),
-    deep = col_integer()
+    deployid = readr::col_character(),
+    ptt = readr::col_character(),
+    depthsensor = readr::col_character(),
+    source = readr::col_character(),
+    instr = readr::col_character(),
+    count = readr::col_integer(),
+    start = readr::col_datetime(format = "%H:%M:%S %d-%b-%Y"),
+    end = readr::col_datetime(format = "%H:%M:%S %d-%b-%Y"),
+    what = readr::col_character(),
+    number = readr::col_integer(),
+    shape = readr::col_character(),
+    depthmin = readr::col_number(),
+    depthmax = readr::col_number(),
+    durationmin = readr::col_number(),
+    durationmax = readr::col_number(),
+    shallow = readr::col_integer(),
+    deep = readr::col_integer()
   )
   behav_df <- readr::type_convert(behav_df,col_types = coltypes_list)
   return(behav_df)

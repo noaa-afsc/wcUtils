@@ -108,18 +108,18 @@ read_histos <- function(histo_file,to_lower = TRUE) {
   coltypes_list <- list(
     deployid = readr::col_character(),
     ptt = readr::col_character(),
-    depthsensor = readr::col_numeric(),
+    depthsensor = readr::col_number(),
     source = readr::col_character(),
     instr = readr::col_character(),
     histtype = readr::col_character(),
-    date = readr::col_datetime(format = "%H:%M:%S %d-%b-%Y",tz = "UTC"),
-    time_offset = readr::col_numeric(),
+    date = readr::col_datetime(format = "%H:%M:%S %d-%b-%Y"),
+    time_offset = readr::col_number(),
     count = readr::col_integer(),
     locationquality = readr::col_character(),
-    latitude = readr::col_numeric(),
-    longitude = readr::col_numeric(),
+    latitude = readr::col_number(),
+    longitude = readr::col_number(),
     numbins = readr::col_integer(),
-    sum = readr::col_numeric()
+    sum = readr::col_number()
   )
   
   bintypes <-

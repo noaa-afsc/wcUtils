@@ -29,7 +29,7 @@ wcGetDownload <- function(id) {
   dir.create(temp_path)
   unzip.fail <- try(unzip(temp_file, exdir=temp_path))
   while(inherits(unzip.fail, "try-error")){
-    cat("error unzipping: ",id,"\n")
+    warning(paste("error unzipping: ",id))
     unlink(temp_file)
     unlink(temp_path)
     temp_file <- tempfile()
