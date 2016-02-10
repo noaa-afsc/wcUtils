@@ -4,7 +4,7 @@
 \alias{wcGetDownload}
 \title{Retrieve data from Wildlife Computers Data Portal}
 \usage{
-wcGetDownload(id)
+wcGetDownload(id, keyfile = NULL)
 }
 \arguments{
 \item{id}{a single character representing a data portal unique deployment identifier}

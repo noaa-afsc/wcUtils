@@ -5,12 +5,15 @@
 \title{Send POST to Wildlife Computers Data Portal API}
 \usage{
 wcPOST(wc.key = getOption("wcAccessKey"),
-  wc.secret = getOption("wcSecretKey"), params = "action=get_deployments")
+  wc.secret = getOption("wcSecretKey"), keyfile = NULL,
+  params = "action=get_deployments")
 }
 \arguments{
 \item{wc.key}{public access key (default retrieves from option value set in .Rprofile)}
 
 \item{wc.secret}{secret access key (default retrieves from option value set in .Rprofile)}
+
+\item{keyfile}{path to a json formatted keyfile with wcAccessKey and wcSecretKey}
 
 \item{params}{POST message (default returns a list of deployments)}
 }

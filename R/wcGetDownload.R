@@ -20,9 +20,9 @@
 #'   status,timelines)
 #' @importFrom magrittr %>%
 #' @export
-wcGetDownload <- function(id) {
+wcGetDownload <- function(id,keyfile=NULL) {
   download_params <- paste("action=download_deployment&id=",id,sep="")
-  r <- wcPOST(params=download_params)
+  r <- wcPOST(keyfile=keyfile,params=download_params)
   temp_file <- tempfile()
   writeBin(httr::content(r, "raw"), temp_file)
   temp_path <- tempfile()

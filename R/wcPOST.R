@@ -27,6 +27,7 @@
 #'   
 #' @param wc.key public access key (default retrieves from option value set in .Rprofile)
 #' @param wc.secret secret access key (default retrieves from option value set in .Rprofile)
+#' @param keyfile path to a json formatted keyfile with wcAccessKey and wcSecretKey
 #' @param params POST message (default returns a list of deployments)
 #'   
 #' @return an \code{httr} response object is returned. Content of the response can be obtained with
@@ -34,7 +35,14 @@
 #' @export
 wcPOST <- function(wc.key=getOption("wcAccessKey"),
                    wc.secret=getOption("wcSecretKey"),
+                   keyfile=NULL,
                    params="action=get_deployments") {
+  
+  if(!is.null(keyfile)) {
+    keys <- jsonlite::fromJSON(keyfile)
+    wc.key <- keys$wcAccessKey
+    wc.secret <- keys$wcSecretKey
+  }
   
   x.hash <- digest::hmac(wc.secret,params,algo="sha256")
   
