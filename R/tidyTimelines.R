@@ -13,10 +13,10 @@
 tidyTimelines <- function(histos) {
     histos <- histos$histos
     histos <- dplyr::filter(histos,
-                            histtype %in% c('Percent','TwentyMinTimelines'))
+                            histtype %in% c('Percent','TwentyMinTimeline'))
     types <- dplyr::group_by(histos,histtype)
     t <- dplyr::summarise(types, n=n())
-    if (all(!t$histtype %in% c('Percent','TwentyMinTimelines'))) {
+    if (all(!t$histtype %in% c('Percent','TwentyMinTimeline'))) {
       stop('No timeline histogram types found',call.=FALSE)
     }
     if(nrow(t)==1) {
@@ -37,7 +37,7 @@ tidyTimelines <- function(histos) {
         dplyr::select(one_of(c("deployid","datadatetime","percent_dry"))) %>%
         dplyr::arrange(deployid,datadatetime)
     }
-    if(type=="TwentyMinTimelines") {
+    if(type=="TwentyMinTimeline") {
       histos_sub <- dplyr::filter(histos,histtype == type)
       bins<-list(variable=paste("bin",1:72,sep=""),secs=seq(from=0,by=1200,length.out=72))
       bins<-as.data.frame(bins)
