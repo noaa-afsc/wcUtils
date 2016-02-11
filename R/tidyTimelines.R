@@ -38,13 +38,15 @@ tidyTimelines <- function(histos) {
         dplyr::arrange(deployid,datadatetime)
     }
     if(type=="TwentyMinTimeline") {
-      histos_sub <- dplyr::filter(histos,histtype == type)
-      bins<-list(variable=paste("bin",1:72,sep=""),secs=seq(from=0,by=1200,length.out=72))
+      histos_sub <- dplyr::filter(histos,
+                                  histtype == type,
+                                  lubridate::hour(date) == 0)
+      bins<-list(bin=paste("bin",1:72,sep=""),secs=seq(from=0,by=1200,length.out=72))
       bins<-as.data.frame(bins)
       timeline <- histos_sub %>%
         tidyr::gather(bin,percent_dry,starts_with('bin')) %>%
         merge(bins) %>%
-        dplyr::mutate(datadatetime = date + seconds(secs)) %>%
+        dplyr::mutate(datadatetime = date + lubridate::seconds(secs)) %>%
         dplyr::select(one_of(c("deployid","datadatetime","percent_dry"))) %>%
         dplyr::arrange(deployid,datadatetime)
     }
