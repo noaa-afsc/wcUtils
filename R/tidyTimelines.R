@@ -47,7 +47,7 @@ tidyTimelines <- function(histos) {
         tidyr::gather(bin,dry_status,starts_with('bin')) %>%
         merge(bins) %>%
         dplyr::mutate(datadatetime = date + lubridate::seconds(secs),
-                      percent_dry = as.numeric(dry_status) * 100) %>%
+                      percent_dry = ifelse(dry_status==0,100,0)) %>%
         dplyr::select(one_of(c("deployid","datadatetime","percent_dry"))) %>%
         dplyr::arrange(deployid,datadatetime)
     }
