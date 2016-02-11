@@ -41,9 +41,9 @@ read_histos <- function(histo_file,to_lower = TRUE) {
   histo_lines <- lapply(histo_lines,function(x)
     strsplit(x,','))
   
-  check_lengths <- sapply(histo_lines,function(x) length(x[[1]]))
-  check_lengths <- ifelse(check_lengths==84,TRUE,FALSE)
-  histo_lines <- histo_lines[check_lengths]
+  #check_lengths <- sapply(histo_lines,function(x) length(x[[1]]))
+  #check_lengths <- ifelse(check_lengths==87,TRUE,FALSE)
+  #histo_lines <- histo_lines[check_lengths]
   
   histos <- do.call("rbind", lapply(histo_lines,
                                     function(x)
