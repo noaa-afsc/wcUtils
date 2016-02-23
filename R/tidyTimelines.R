@@ -24,7 +24,7 @@ tidyTimelines <- function(histos) {
     } else if(nrow(t)>1) {
       type <- as.character(subset(t,n=max(n))$histtype[1])
     }
-    if(type=="Percent" | "1Percent") {
+    if(type %in% c("Percent","1Percent")) {
       histos_sub <- dplyr::filter(histos,
                                   histtype == type,
                                   lubridate::hour(date) == 0)
