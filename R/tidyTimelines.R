@@ -13,10 +13,10 @@
 tidyTimelines <- function(histos) {
     histos <- histos$histos
     histos <- dplyr::filter(histos,
-                            histtype %in% c('Percent','TwentyMinTimeline'))
+                            histtype %in% c('Percent','1Percent','TwentyMinTimeline'))
     types <- dplyr::group_by(histos,histtype)
     t <- dplyr::summarise(types, n=n())
-    if (all(!t$histtype %in% c('Percent','TwentyMinTimeline'))) {
+    if (all(!t$histtype %in% c('Percent','1Percent','TwentyMinTimeline'))) {
       stop('No timeline histogram types found',call.=FALSE)
     }
     if(nrow(t)==1) {
@@ -24,7 +24,7 @@ tidyTimelines <- function(histos) {
     } else if(nrow(t)>1) {
       type <- as.character(subset(t,n=max(n))$histtype[1])
     }
-    if(type=="Percent") {
+    if(type=="Percent" | "1Percent") {
       histos_sub <- dplyr::filter(histos,
                                   histtype == type,
                                   lubridate::hour(date) == 0)
