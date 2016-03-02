@@ -15,6 +15,9 @@ tidyDiveDepths <- function(histos) {
   limits <- dplyr::filter(histos$limits,histtype=='DiveDepthLIMITS') %>% 
     dplyr::select(-histtype) %>% 
     tidyr::gather(bin,bin_depth_limit,starts_with('bin'))
+  if(nrow(limits)<1) {
+    warning("Dive depth limits are suspicious. Will use generic bin labels")
+  }
   }
   histos <- histos$histos
   types <- dplyr::group_by(histos,histtype)
@@ -23,13 +26,13 @@ tidyDiveDepths <- function(histos) {
     warning('No DiveDepth data found',call. = FALSE)
     return(NULL)
   }
-  if(nrow(limits)<1 | is.null(histos$limits)) {
+  if(is.null(histos$limits)) {
     warning("No dive depth limits found. Will use generic bin labels",call.=FALSE)
   }
   
   histos <- dplyr::filter(histos,
                           histtype=='DiveDepth')
-  if(nrow(limits)>=1 | !is.null(histos$limits)) {
+  if(!is.null(histos$limits) && nrow(limits)==1) {
   divedepth <- histos %>%
     tidyr::gather(bin,num_dives, starts_with('bin')) %>%
     dplyr::rename(datadatetime=date) %>% 
@@ -38,8 +41,7 @@ tidyDiveDepths <- function(histos) {
     dplyr::select(deployid,datadatetime,num_dives,bin_depth_limit,bin) %>% 
     dplyr::mutate(bin_depth_limit=format_bins(bin_depth_limit)) %>% 
     dplyr::arrange(deployid,datadatetime,bin) 
-  }
-  if(nrow(limits)<1 | is.null(histos$limits)) {
+  } else {
     divedepth <- histos %>%
       tidyr::gather(bin,num_dives, starts_with('bin')) %>%
       dplyr::rename(datadatetime=date) %>% 
