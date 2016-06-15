@@ -83,7 +83,8 @@ read_locs <- function(loc_file,to_lower = TRUE) {
     dplyr::mutate(deployid = strip_quotes(deployid)) %>% 
     dplyr::group_by(deployid) %>% 
     dplyr::arrange(deployid,date) %>%
-    dplyr::rename(date_time=date)
+    dplyr::rename(date_time=date) %>% 
+    tbl_df()
 
   
   return(locs_df)
