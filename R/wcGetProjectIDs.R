@@ -14,13 +14,18 @@
 wcGetProjectIDs <- function(xml_content,project=NULL) {
   if(class(xml_content) == "response") {
     warning('wcPOST response object provided, extracting content to xml',call.=FALSE)
-    xml_content <- httr::content(xml_content)
+    doc <- xml2::read_xml(httr::content(xml_content, 'raw'))
+    doc <- XML::xmlParse(doc)
+  } else if(class(xml_content) == "xml_document") {
+    doc <- XML::xmlParse(xml_content)
+  } else {
+    stop('xml_content not a valid response or xml_document')
   }
   if(is.null(project)) {
     stop("Error: you must provide a project name")
   }
   valid_project <- 
-    XML::getNodeSet(xml_content,paste("boolean(//data/deployment/labels/category",
+    XML::getNodeSet(doc,paste("boolean(//data/deployment/labels/category",
                          "/name[text() = 'Project'])",sep=""))
   if(!valid_project) {
     stop("Error: no 'Project' label found")
@@ -29,6 +34,6 @@ wcGetProjectIDs <- function(xml_content,project=NULL) {
                  "name[text() = 'Project']/../label[text() = '",
                   project,
                  "']/../../../id",sep="")
-  ids <- XML::xpathSApply(xml_content,xpath,XML::xmlValue)
+  ids <- XML::xpathSApply(doc,xpath,XML::xmlValue)
   return(ids)
 }
