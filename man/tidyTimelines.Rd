@@ -4,10 +4,12 @@
 \alias{tidyTimelines}
 \title{Apply 'tidy' data principles to the timeline histogram data stream}
 \usage{
-tidyTimelines(histos)
+tidyTimelines(histos, all_types = FALSE)
 }
 \arguments{
 \item{histos}{a list returned from \code{read_histos}}
+
+\item{all_types}{by default the dominant histtype is chosen; \code{all_types = TRUE} will return records of all types found}
 }
 \value{
 a data frame with tidy, narrow data structure and actual time periods in place of bins
