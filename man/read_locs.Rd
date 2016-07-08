@@ -7,7 +7,7 @@
 read_locs(loc_file, to_lower = TRUE)
 }
 \arguments{
-\item{loc_file}{file path or file connection to a *-Histos.csv file}
+\item{loc_file}{file path or file connection to a *-Locations.csv file}
 
 \item{to_lower}{whether to convert the column names to lower case}
 }

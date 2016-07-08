@@ -7,7 +7,7 @@
 read_behav(behav_file, to_lower = TRUE)
 }
 \arguments{
-\item{behav_file}{file path or file connection to a *-Histos.csv file}
+\item{behav_file}{file path or file connection to a *-Behavior.csv file}
 
 \item{to_lower}{whether to convert the column names to lower case}
 }
