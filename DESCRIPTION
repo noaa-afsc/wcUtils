@@ -8,7 +8,7 @@ Description: This package provides basic access and capabilities for
     data are employed.
 Depends:
     R (>= 3.1.1)
-License: file LICENSE
+License: CC0 + file LICENSE
 LazyData: true
 Imports:
     lubridate,
@@ -20,5 +20,6 @@ Imports:
     digest,
     XML,
     xml2,
-    jsonlite
+    jsonlite,
+    data.table
 RoxygenNote: 5.0.1
