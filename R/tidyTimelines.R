@@ -34,7 +34,7 @@ tidyTimelines <- function(histos) {
         tidyr::gather(bin,percent_dry, starts_with('bin')) %>%
         merge(bins) %>%
         dplyr::mutate(datadatetime = date + lubridate::hours(hour)) %>%
-        dplyr::select(one_of(c("deployid","datadatetime","percent_dry"))) %>%
+        dplyr::select(one_of(c("deployid","histtype","datadatetime","percent_dry"))) %>%
         dplyr::arrange(deployid,datadatetime)
     }
     if(type=="TwentyMinTimeline") {
@@ -48,7 +48,7 @@ tidyTimelines <- function(histos) {
         merge(bins) %>%
         dplyr::mutate(datadatetime = date + lubridate::seconds(secs),
                       percent_dry = ifelse(dry_status==0,100,0)) %>%
-        dplyr::select(one_of(c("deployid","datadatetime","percent_dry"))) %>%
+        dplyr::select(one_of(c("deployid","histtype","datadatetime","percent_dry"))) %>%
         dplyr::arrange(deployid,datadatetime)
     }
   return(timeline)
