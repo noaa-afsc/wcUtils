@@ -2,9 +2,8 @@ Package: wcUtils
 Title: Utilities to Access the Wildlife Computers Data Portal API
 Version: 0.1
 Authors@R: c(
-    person("Josh M.", "London", role = c("aut", "cre"), email = "josh.london@noaa.gov",
-    family = "NOAA"),
-    person("Alexander","Zwart", family = "CSIRO", role = c("ctb", "cph"),
+    person("Josh M.", "London", role = c("aut", "cre"), email = "josh.london@noaa.gov"),
+    person("Alexander","Zwart", role = c("ctb", "cph"),
     comment = "fixCSV.R from PolyPatEx package")
     )
 Description: This package provides basic access and capabilities for
