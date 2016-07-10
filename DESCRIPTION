@@ -12,7 +12,7 @@ Description: This package provides basic access and capabilities for
     data are employed.
 Depends:
     R (>= 3.1.1)
-License: CC0 + file LICENSE
+License: CC0 | file LICENSE
 LazyData: true
 Imports:
     lubridate,
