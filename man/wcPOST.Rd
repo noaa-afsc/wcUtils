@@ -4,14 +4,14 @@
 \alias{wcPOST}
 \title{Send POST to Wildlife Computers Data Portal API}
 \usage{
-wcPOST(wc.key = getOption("wcAccessKey"),
-  wc.secret = getOption("wcSecretKey"), keyfile = NULL,
+wcPOST(wc.key = Sys.getenv("wcAccessKey"),
+  wc.secret = Sys.getenv("wcSecretKey"), keyfile = NULL,
   params = "action=get_deployments")
 }
 \arguments{
-\item{wc.key}{public access key (default retrieves from option value set in .Rprofile)}
+\item{wc.key}{public access key (default retrieves from option value set in .Renviron)}
 
-\item{wc.secret}{secret access key (default retrieves from option value set in .Rprofile)}
+\item{wc.secret}{secret access key (default retrieves from option value set in .Renviron)}
 
 \item{keyfile}{path to a json formatted keyfile with wcAccessKey and wcSecretKey}
 
@@ -33,20 +33,20 @@ instead, rely on other helper/wrapper functions within the package.
 The Wildlife Computers Data Portal API uses a form of keyed-hash message authentication code for 
 secure access. Your 'Access Key' and 'Secret Key' can be obtained from the data portal website 
 (Account Settings > Web Services Security). For security reasons you should NOT include the keys 
-as plain text in any scripts. Instead, include the key values as options within your 
-\code{.Rprofile}.
+as plain text in any scripts. Instead, include the key values as within your 
+\code{.Renviron}.
 }
-\section{Setting key values within .Rprofile}{
+\section{Setting key values within .Renviron}{
  
   This option is a preferred option for storing keys,
-  passwords and other sensitive values. Your \code{.Rprofile} should be secured via OS
-  security/permissions (e.g. on Linux/OS X \code{.Rprofile} is stored within the home directory
+  passwords and other sensitive values. Your \code{.Renviron} should be secured via OS
+  security/permissions (e.g. on Linux/OS X \code{.Renviron} is stored within the home directory
   which is only accessible by an authorized user. However, you should not share your
-  \code{.Rprofile} or include your \code{.Rprofile} in version control (e.g. git) if you use this
+  \code{.Renviron} or include your \code{.Renviron} in version control (e.g. git) if you use this
   option. An alternative is to read values from a different file in the home directory or to use
-  environment variables.
+  OS level environment variables.
   
-  preformatted{ options(wcAccessKey = 'E4iZhsfdje7590JDNR/VARTEZyhfwb84485X5Xw86ow=') 
-  options(wcSecretKey = 'WIRJFYhfjdsuSEqKoE7WSDvXUHzVP0pHDJSscmeA7fw=') }
+  preformatted{ wcAccessKey = 'E4iZhsfdje7590JDNR/VARTEZyhfwb84485X5Xw86ow=' 
+  wcSecretKey = 'WIRJFYhfjdsuSEqKoE7WSDvXUHzVP0pHDJSscmeA7fw=' }
 }
 
