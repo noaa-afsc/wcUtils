@@ -20,17 +20,8 @@ read_histos <- function(histo_file,to_lower = TRUE) {
   
   if (nrow(histo_limits) > 0) {
     histo_limits <- histo_limits %>% 
-  #crazy method for removing all of the columns with only NA values
-  .[, apply(
-    apply(
-      .[1:(ncol(.))], 
-      2, 
-      is.na),
-    2,sum) == 0] %>% 
-    select(-depthsensor,-source,-date) %>% 
-    data.frame()
+      .[,colSums(is.na(.))<nrow(.)]
   }
-  
   strip_quotes <- function(s) gsub("\"","",s)
   
   histos_df <- histos_df %>% 

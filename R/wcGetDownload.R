@@ -40,6 +40,7 @@ wcGetDownload <- function(id,keyfile=NULL) {
   }
   loc_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Locations\\.csv$")
   fastgps_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-\\d+-FastGPS\\.csv$")
+  all_locs_file <- list.files(temp_path, full.names=TRUE, pattern = "-[0-9]+-Locations.csv")
   behav_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Behavior\\.csv$")
   histo_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Histos\\.csv$")
   status_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Status\\.csv$")
@@ -49,6 +50,9 @@ wcGetDownload <- function(id,keyfile=NULL) {
   }
   if(length(fastgps_file)==1){
     df_list$fastgps <- wcUtils::read_fastGPS(fastgps_file)
+  }
+  if(length(all_locs_file)==1){
+    df_list$all_locations <- wcUtils::read_locs(all_locs_file)
   }
   if(length(behav_file)==1) {
   df_list$behavior <- wcUtils::read_behav(behav_file)

@@ -30,5 +30,5 @@ read_locs <- function(loc_file,to_lower = TRUE) {
     dplyr::rename(date_time = date) %>% 
     data.frame()
   
-  return(locs_df)
+  return(loc_df)
 }
