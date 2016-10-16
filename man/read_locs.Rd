@@ -4,12 +4,14 @@
 \alias{read_locs}
 \title{Parse a *-Locations.csv files into a proper data.frame}
 \usage{
-read_locs(loc_file, to_lower = TRUE)
+read_locs(loc_file, to_lower = TRUE, fix_csv = FALSE)
 }
 \arguments{
 \item{loc_file}{file path or file connection to a *-Locations.csv file}
 
 \item{to_lower}{whether to convert the column names to lower case}
+
+\item{fix_csv}{whether to attemtp to fix any comma, csv issues}
 }
 \value{
 a data frame

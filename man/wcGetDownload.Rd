@@ -4,7 +4,8 @@
 \alias{wcGetDownload}
 \title{Retrieve data from Wildlife Computers Data Portal}
 \usage{
-wcGetDownload(id, keyfile = NULL)
+wcGetDownload(id, wc.key = Sys.getenv("wcAccessKey"),
+  wc.secret = Sys.getenv("wcSecretKey"), keyfile = NULL, tidy = TRUE)
 }
 \arguments{
 \item{id}{a single character representing a data portal unique deployment identifier}
@@ -12,8 +13,8 @@ wcGetDownload(id, keyfile = NULL)
 \item{tidy}{whether to tidy the histogram data stream and create a timelines output}
 }
 \value{
-a list of data frames with up to 5 names elemnts (locations, behavior, histograms,
-  status,timelines)
+a list of data frames with up to 6 named elemnts (locations, behavior, histograms,
+  status,timelines,messages)
 }
 \description{
 \code{wcGetDownload} will return a list of data frames containing deployment data
@@ -21,7 +22,7 @@ a list of data frames with up to 5 names elemnts (locations, behavior, histogram
 \details{
 The Wildlife Computers Data Portal will return deployment data in the form of a zipped file with 
 various comma-separated files and other accessory files. The *.csv files correspond to particular
-data streams. This function, currently, focuses on the locations, behavior, histograms and status
+data streams. This function, currently, focuses on the locations, behavior, histograms, timelines, status, and messages
 data streams.
 
 For most of the files, the data are read in with \code{read.csv} and, other than a few steps to 

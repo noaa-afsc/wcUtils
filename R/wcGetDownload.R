@@ -4,7 +4,7 @@
 #' 
 #' The Wildlife Computers Data Portal will return deployment data in the form of a zipped file with 
 #' various comma-separated files and other accessory files. The *.csv files correspond to particular
-#' data streams. This function, currently, focuses on the locations, behavior, histograms and status
+#' data streams. This function, currently, focuses on the locations, behavior, histograms, timelines, status, and messages
 #' data streams.
 #' 
 #' For most of the files, the data are read in with \code{read.csv} and, other than a few steps to 
@@ -16,13 +16,31 @@
 #' @param id a single character representing a data portal unique deployment identifier
 #' @param tidy whether to tidy the histogram data stream and create a timelines output
 #'   
-#' @return a list of data frames with up to 5 names elemnts (locations, behavior, histograms,
-#'   status,timelines)
+#' @return a list of data frames with up to 6 named elemnts (locations, behavior, histograms,
+#'   status,timelines,messages)
 #' @importFrom magrittr %>%
 #' @export
-wcGetDownload <- function(id,keyfile=NULL) {
+wcGetDownload <- function(id,wc.key=Sys.getenv("wcAccessKey"),
+                          wc.secret=Sys.getenv("wcSecretKey"),
+                          keyfile=NULL, tidy=TRUE) {
   download_params <- paste("action=download_deployment&id=",id,sep="")
-  r <- wcPOST(keyfile=keyfile,params=download_params)
+    
+    if (!is.null(keyfile)) {
+      keys <- jsonlite::fromJSON(keyfile)
+      wc.key <- keys$wcAccessKey
+      wc.secret <- keys$wcSecretKey
+      r <- wcPOST(wc.key,wc.secret,
+                  params=download_params)
+    }
+  if (!is.null(wc.key) & !is.null(wc.secret)) {
+    r <- wcPOST(wc.key,wc.secret,params=download_params)
+  }
+    
+    if (is.null(wc.key) | is.null(wc.secret)) {
+      stop("Wildlife Computers keys not found. Either use .Renviron (see help) or a keyfile.json")
+    }
+  
+  
   temp_file <- tempfile()
   writeBin(httr::content(r, "raw"), temp_file)
   temp_path <- tempfile()
@@ -44,6 +62,7 @@ wcGetDownload <- function(id,keyfile=NULL) {
   behav_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Behavior\\.csv$")
   histo_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Histos\\.csv$")
   status_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Status\\.csv$")
+  messages_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-All\\.csv$")
   df_list <- vector("list")
   if(length(loc_file)==1){
   df_list$locations <- wcUtils::read_locs(loc_file)
@@ -59,6 +78,12 @@ wcGetDownload <- function(id,keyfile=NULL) {
   }
   if(length(histo_file)==1) {
   df_list$histos <- wcUtils::read_histos(histo_file)
+  if (tidy) { 
+    df_list$timelines <- wcUtils::tidyTimelines(df_list$histos)
+    }
+  }
+  if(length(messages_file)==1) {
+    df_list$messages <- wcUtils::read_allmsg(messages_file)
   }
   if(length(status_file)==1) {
     test <- try(readr::read_csv(status_file),silent = TRUE)

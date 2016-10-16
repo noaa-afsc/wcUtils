@@ -2,14 +2,36 @@
 #'
 #' @param behav_file file path or file connection to a *-Behavior.csv file
 #' @param to_lower whether to convert the column names to lower case
+#' @param fix_csv whether to attemtp to fix any comma, csv issues
 #'
 #' @return a data frame
 #' @export
-read_behav <- function(behav_file,to_lower = TRUE) {
-  wcUtils:::fixCSV(behav_file,overwrite = TRUE)
-  behav_df <- data.table::fread(behav_file,
-                                data.table=FALSE)
-  behav_df <- behav_df[,-c(16:27)]
+read_behav <- function(behav_file,to_lower = TRUE, fix_csv = FALSE) {
+  if (fix_csv) {
+    wcUtils:::fixCSV(behav_file,overwrite = TRUE)
+  }
+
+  col_types <- readr::cols_only(
+    DeployID = readr::col_character(),
+    Ptt = readr::col_character(),
+    DepthSensor = readr::col_character(),
+    Source = readr::col_character(),
+    Instr = readr::col_character(),
+    Count = readr::col_integer(),
+    Start = readr::col_datetime("%H:%M:%S %d-%b-%Y"),
+    End = readr::col_datetime("%H:%M:%S %d-%b-%Y"),
+    What = readr::col_character(),
+    Number = readr::col_integer(),
+    Shape = readr::col_character(),
+    DepthMin = readr::col_double(),
+    DepthMax = readr::col_double(),
+    DurationMin = readr::col_double(),
+    DurationMax = readr::col_double(),
+    Shallow = readr::col_integer(),
+    Deep = readr::col_integer()
+  )
+  
+  behav_df <- readr::read_csv(behav_file,col_types = col_types)
   
   colnames(behav_df) <- gsub(" ", "_", colnames(behav_df))
   colnames(behav_df) <- gsub("-","",colnames(behav_df))
@@ -20,12 +42,6 @@ read_behav <- function(behav_file,to_lower = TRUE) {
   strip_quotes <- function(s) gsub("\"","",s)
   
   behav_df <- behav_df %>% 
-    mutate(
-      ptt = as.character(ptt),
-      start = lubridate::parse_date_time(start,"%H:%M:%S %d-%b-%Y"),
-      end = lubridate::parse_date_time(end,"%H:%M:%S %d-%b-%Y")
-    ) %>% 
-    dplyr::rowwise(.) %>% 
     dplyr::mutate(deployid = strip_quotes(deployid)) %>% 
     dplyr::group_by(deployid) %>% 
     dplyr::arrange(deployid,start) %>%

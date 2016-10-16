@@ -4,12 +4,14 @@
 \alias{read_histos}
 \title{Parse a *-Histos.csv files into a proper data.frame}
 \usage{
-read_histos(histo_file, to_lower = TRUE)
+read_histos(histo_file, to_lower = TRUE, fix_csv = FALSE)
 }
 \arguments{
 \item{histo_file}{file path or file connection to a *-Histos.csv file}
 
 \item{to_lower}{whether to convert the column names to lower case}
+
+\item{fix_csv}{whether to attemtp to fix any comma, csv issues}
 }
 \value{
 a list of two data frames

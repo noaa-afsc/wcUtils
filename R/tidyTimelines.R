@@ -15,6 +15,10 @@ tidyTimelines <- function(histos,all_types = FALSE) {
     histos <- histos$histos
     histos <- dplyr::filter(histos,
                             histtype %in% c('Percent','1Percent','TwentyMinTimeline'))
+    if(nrow(histos) < 2) {
+      warning("not enough timeline data to tidy. returning NULL")
+      return(NULL)
+    }
     types <- dplyr::group_by(histos,histtype)
     t <- dplyr::summarise(types, n = n())
     if (all(!t$histtype %in% c('Percent','1Percent','TwentyMinTimeline'))) {

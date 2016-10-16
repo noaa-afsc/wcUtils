@@ -4,12 +4,14 @@
 \alias{read_behav}
 \title{Parse a *-Behavior.csv file into a proper data.frame}
 \usage{
-read_behav(behav_file, to_lower = TRUE)
+read_behav(behav_file, to_lower = TRUE, fix_csv = FALSE)
 }
 \arguments{
 \item{behav_file}{file path or file connection to a *-Behavior.csv file}
 
 \item{to_lower}{whether to convert the column names to lower case}
+
+\item{fix_csv}{whether to attemtp to fix any comma, csv issues}
 }
 \value{
 a data frame
