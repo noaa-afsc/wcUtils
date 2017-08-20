@@ -31,4 +31,3 @@ stream. Here, we use the \code{tidyr} and \code{dplyr} package to 'tidy' the dat
 appropriate data structure. For now, this is only implemented with timeline data and the 'tidy'd'
 data is provided within the list element \code{$timelines}
 }
-

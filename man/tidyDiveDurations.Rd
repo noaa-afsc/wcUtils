@@ -20,4 +20,3 @@ The histogram data stream is provided in a 'wide' format (each row represents a 
 
 This is implemented, here, with the dive duration data. For dive uration data, the tag records the duration in seconds of a qualifying dive and tallies those durationso user-sepcified duration bins and user-specified time bins. This, unlike with timeline data, requires some knowledge of these user-specified bins. As long as the user has uploaded a configuration/report file to the Wildlife Computers Data Portal, then the *-Histos.csv file provides information on the dive durations. If the bin information is not available, the function will produce a warning and output files with generic 'Bin' labels.
 }
-

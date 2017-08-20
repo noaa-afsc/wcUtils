@@ -1,12 +1,11 @@
 #' Parse a *-Locations.csv files into a proper data.frame
 #'
 #' @param loc_file file path or file connection to a *-Locations.csv file
-#' @param to_lower whether to convert the column names to lower case
 #' @param fix_csv whether to attemtp to fix any comma, csv issues
 #'
 #' @return a data frame
 #' @export
-read_locs <- function(loc_file,to_lower = TRUE, fix_csv = FALSE) {
+read_locs <- function(loc_file,fix_csv = FALSE) {
   if (fix_csv) {
   wcUtils:::fixCSV(loc_file,overwrite = TRUE)
   }
@@ -32,13 +31,8 @@ read_locs <- function(loc_file,to_lower = TRUE, fix_csv = FALSE) {
     Comment = readr::col_character()
   )
   
-  loc_df <- readr::read_csv(loc_file, col_types = col_types)
-  
-  colnames(loc_df) <- gsub(" ", "_", colnames(loc_df))
-  colnames(loc_df) <- gsub("-","",colnames(loc_df))
-  if (to_lower == TRUE) {
-    colnames(loc_df) <- tolower(colnames(loc_df))
-  }
+  loc_df <- readr::read_csv(loc_file, col_types = col_types) %>% 
+    wcUtils::make_names()
   
   strip_quotes <- function(s) gsub("\"","",s)
   

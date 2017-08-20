@@ -115,4 +115,3 @@ fixCSV("alleleDataFile.csv",overwrite=TRUE)
 \author{
 Alexander Zwart (alec.zwart at csiro.au)
 }
-

@@ -20,4 +20,3 @@ The histogram data stream is provided in a 'wide' format (each row represents a 
 
 This is implemented, here, with the time-at-depth data. For time-at-depth data, the tag records the portion of time the tag spent within user-defined dive depth bins. This, unlike with timeline data, requires some knowledge of these user-specified bins. As long as the user has uploaded a configuration/report file to the Wildlife Computers Data Portal, then the *-Histos.csv file provides information on the time-at-depth bins. If the bin information is not available, the function will produce a warning and output files with generic 'Bin' labels.
 }
-

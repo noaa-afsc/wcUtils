@@ -19,4 +19,3 @@ a data frame
 \description{
 Parse a *-All.csv file into a proper data.frame
 }
-

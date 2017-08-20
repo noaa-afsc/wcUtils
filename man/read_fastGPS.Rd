@@ -19,4 +19,3 @@ a data frame
 \description{
 Parse a *-FastGPS.csv files into a proper data.frame
 }
-

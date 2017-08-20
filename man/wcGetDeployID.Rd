@@ -23,4 +23,3 @@ Computers Data Portal. The vector of deployment ID(s) returned will be a subset 
 deployid character in the function call. The list returned will also include a simple
 data frame with summary information one can use to determine the appropriate id.
 }
-

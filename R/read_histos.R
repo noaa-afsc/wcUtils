@@ -6,7 +6,7 @@
 #'
 #' @return a list of two data frames
 #' @export
-read_histos <- function(histo_file,to_lower = TRUE, fix_csv = FALSE) {
+read_histos <- function(histo_file, to_lower = TRUE, fix_csv = FALSE) {
   if (fix_csv) {
     wcUtils:::fixCSV(histo_file,overwrite = TRUE)
   }

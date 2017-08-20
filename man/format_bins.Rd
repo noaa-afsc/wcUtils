@@ -15,4 +15,3 @@ a vector of formated bin labels
 \description{
 format bin labels
 }
-

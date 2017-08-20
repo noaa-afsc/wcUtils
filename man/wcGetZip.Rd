@@ -24,4 +24,3 @@ a path to the zip file
 The Wildlife Computers Data Portal will return deployment data in the form of a zipped file with 
 various comma-separated files and other accessory files.
 }
-

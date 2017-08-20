@@ -20,4 +20,3 @@ returns a vector of deployment IDs
 \details{
 Each deployment in the Wildlife Computers Data Portal is identified by a unique alpha-numeric value. This function searches the XML response data and extracts those IDs
 }
-

@@ -21,4 +21,3 @@ returns a vector of deployment IDs
 This returns a subset of deployment IDs with new data available on the portal within the last
 \code{n} days. The default value is for 14 days
 }
-

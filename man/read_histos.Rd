@@ -19,4 +19,3 @@ a list of two data frames
 \description{
 Parse a *-Histos.csv files into a proper data.frame
 }
-

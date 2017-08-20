@@ -22,4 +22,3 @@ This function presumes a custom label,'Project', has been setup for deployments 
 Computers Data Portal. The vector of deployment IDs returned will be a subset that match the
 project name provided in the function call.
 }
-
