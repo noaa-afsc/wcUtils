@@ -45,7 +45,8 @@ wcPOST <- function(wc.key=Sys.getenv("wcAccessKey"),
   }
   
   if (is.null(wc.key) | is.null(wc.secret)) {
-    stop("Wildlife Computers keys not found. Either use .Renviron (see help) or a keyfile.json")
+    stop("Wildlife Computers keys not found. 
+         Either use .Renviron (see help) or a keyfile.json")
   }
   
   x.hash <- digest::hmac(wc.secret,params,algo = "sha256")
