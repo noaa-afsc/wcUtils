@@ -27,23 +27,31 @@ wcGetZip <- function(id,wc.key = Sys.getenv("wcAccessKey"),
   }
   
   x.hash <- digest::hmac(wc.secret,download_params,algo = "sha256")
+  
+  zip_file <- fs::path(tempdir(),id,ext = "zip")
   r <- httr::POST("http://my.wildlifecomputers.com/services/",
                   body = download_params,
-                  httr::add_headers("X-Access" = wc.key,"X-Hash" = x.hash))
-  temp_file <- tempfile()
-  writeBin(httr::content(r, "raw"), temp_file)
-  temp_path <- tempfile()
-  dir.create(temp_path)
-  unzip.fail <- try(unzip(temp_file, exdir=temp_path))
-  while(inherits(unzip.fail, "try-error")){
-    warning(paste("error unzipping: ",id))
-    unlink(temp_file)
-    unlink(temp_path)
-    temp_file <- tempfile()
-    writeBin(httr::content(r, "raw"), temp_file)
-    temp_path <- tempfile()
-    dir.create(temp_path)
-    unzip.fail <- try(unzip(temp_file, exdir=temp_path))
+                  httr::add_headers("X-Access" = wc.key,"X-Hash" = x.hash),
+                  httr::write_disk(zip_file))
+  unzip.fail <- tryCatch(
+    unzip(zip_file, exdir=tempdir()),
+    warning = function(cnd) {
+      message(paste("error unzipping: ", zip_file))
+      return(cnd)
+    })
+  while(inherits(unzip.fail, "simpleWarning")){
+     message(paste("error unzipping: ",id))
+     message("will try to download again")
+     unlink(zip_file)
+     r <- httr::POST("http://my.wildlifecomputers.com/services/",
+                     body = download_params,
+                     httr::add_headers("X-Access" = wc.key,"X-Hash" = x.hash),
+                     httr::write_disk(zip_file))
+     unzip.fail <- tryCatch(
+       unzip(zip_file, exdir=tempdir()),
+       warning = function(cnd) {
+         message(paste("error unzipping: ", zip_file))
+       })
   }
-  return(temp_file)
+  return(zip_file)
 }
