@@ -4,9 +4,12 @@
 \alias{wcPOST}
 \title{Send POST to Wildlife Computers Data Portal API}
 \usage{
-wcPOST(wc.key = Sys.getenv("wcAccessKey"),
-  wc.secret = Sys.getenv("wcSecretKey"), keyfile = NULL,
-  params = "action=get_deployments")
+wcPOST(
+  wc.key = Sys.getenv("wcAccessKey"),
+  wc.secret = Sys.getenv("wcSecretKey"),
+  keyfile = NULL,
+  params = "action=get_deployments"
+)
 }
 \arguments{
 \item{wc.key}{public access key (default retrieves from option value set in .Renviron)}

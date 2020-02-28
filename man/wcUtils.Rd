@@ -3,7 +3,6 @@
 \docType{package}
 \name{wcUtils}
 \alias{wcUtils}
-\alias{wcUtils-package}
 \title{wcUtils: A package for import/export of Wildlife Computers tag data}
 \description{
 wcUtils provides functionality for working with data from select 

@@ -4,8 +4,12 @@
 \alias{wcGetZip}
 \title{Retrieve a single zip file from Wildlife Computers Data Portal}
 \usage{
-wcGetZip(id, wc.key = Sys.getenv("wcAccessKey"),
-  wc.secret = Sys.getenv("wcSecretKey"), keyfile = NULL)
+wcGetZip(
+  id,
+  wc.key = Sys.getenv("wcAccessKey"),
+  wc.secret = Sys.getenv("wcSecretKey"),
+  keyfile = NULL
+)
 }
 \arguments{
 \item{wc.key}{public access key (default retrieves from option value set in .Renviron)}

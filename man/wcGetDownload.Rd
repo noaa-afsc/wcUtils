@@ -4,8 +4,13 @@
 \alias{wcGetDownload}
 \title{Retrieve data from Wildlife Computers Data Portal}
 \usage{
-wcGetDownload(id, wc.key = Sys.getenv("wcAccessKey"),
-  wc.secret = Sys.getenv("wcSecretKey"), keyfile = NULL, tidy = TRUE)
+wcGetDownload(
+  id,
+  wc.key = Sys.getenv("wcAccessKey"),
+  wc.secret = Sys.getenv("wcSecretKey"),
+  keyfile = NULL,
+  tidy = TRUE
+)
 }
 \arguments{
 \item{id}{a single character representing a data portal unique deployment identifier}

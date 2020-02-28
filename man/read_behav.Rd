@@ -11,7 +11,7 @@ read_behav(behav_file, to_lower = TRUE, fix_csv = FALSE)
 
 \item{to_lower}{whether to convert the column names to lower case}
 
-\item{fix_csv}{whether to attemtp to fix any comma, csv issues}
+\item{fix_csv}{whether to attempt to fix any comma, csv issues}
 }
 \value{
 a data frame
