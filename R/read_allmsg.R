@@ -76,19 +76,12 @@ read_allmsg <- function(allmsg_file,to_lower = TRUE, fix_csv = FALSE) {
     `SENSOR #32` = readr::col_character()
   )
   
-  allmsg_df <- readr::read_csv(allmsg_file, col_types = col_types)
-  
-  colnames(allmsg_df) <- gsub(" ", "_", colnames(allmsg_df))
-  colnames(allmsg_df) <- gsub("-","",colnames(allmsg_df))
-  if (to_lower == TRUE) {
-    colnames(allmsg_df) <- tolower(colnames(allmsg_df))
-  }
-  
-  strip_quotes <- function(s) gsub("\"","",s)
+  allmsg_df <- readr::read_csv(allmsg_file, col_types = col_types) %>% 
+    janitor::clean_names() %>% 
+    dplyr::rename(deployid = deploy_id)
   
   allmsg_df <- allmsg_df %>% 
-    dplyr::rename(ptt = platform_id_no.) %>% 
-    dplyr::mutate(deployid = strip_quotes(deployid)) %>% 
+    dplyr::rename(ptt = platform_id_no) %>% 
     dplyr::group_by(deployid) %>% 
     dplyr::arrange(deployid,msg_date) %>%
     data.frame()

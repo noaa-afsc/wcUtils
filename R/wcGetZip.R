@@ -32,7 +32,7 @@ wcGetZip <- function(id,wc.key = Sys.getenv("wcAccessKey"),
   r <- httr::POST("http://my.wildlifecomputers.com/services/",
                   body = download_params,
                   httr::add_headers("X-Access" = wc.key,"X-Hash" = x.hash),
-                  httr::write_disk(zip_file))
+                  httr::write_disk(zip_file, overwrite = TRUE))
   unzip.fail <- tryCatch(
     unzip(zip_file, exdir=tempdir()),
     warning = function(cnd) {
@@ -46,7 +46,7 @@ wcGetZip <- function(id,wc.key = Sys.getenv("wcAccessKey"),
      r <- httr::POST("http://my.wildlifecomputers.com/services/",
                      body = download_params,
                      httr::add_headers("X-Access" = wc.key,"X-Hash" = x.hash),
-                     httr::write_disk(zip_file))
+                     httr::write_disk(zip_file, overwrite = TRUE))
      unzip.fail <- tryCatch(
        unzip(zip_file, exdir=tempdir()),
        warning = function(cnd) {

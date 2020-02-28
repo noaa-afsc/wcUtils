@@ -32,12 +32,11 @@ read_locs <- function(loc_file,fix_csv = FALSE) {
   )
   
   loc_df <- readr::read_csv(loc_file, col_types = col_types) %>% 
-    wcUtils::make_names()
+    janitor::clean_names() %>% 
+    dplyr::rename(deployid = deploy_id)
   
-  strip_quotes <- function(s) gsub("\"","",s)
   
   loc_df <- loc_df %>% 
-    dplyr::mutate(deployid = strip_quotes(deployid)) %>% 
     dplyr::group_by(deployid) %>% 
     dplyr::arrange(deployid,date) %>%
     dplyr::rename(date_time = date) %>% 

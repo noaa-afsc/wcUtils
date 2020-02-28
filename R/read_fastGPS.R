@@ -43,15 +43,9 @@ read_fastGPS <- function(gps_file,to_lower = TRUE, fix_csv = FALSE) {
 )
   
   gps_df <- readr::read_csv(gps_file, col_types = col_types,
-                            skip = 3)
-  
-  colnames(gps_df) <- gsub(" ", "_", colnames(gps_df))
-  colnames(gps_df) <- gsub("-","",colnames(gps_df))
-  if (to_lower == TRUE) {
-    colnames(gps_df) <- tolower(colnames(gps_df))
-  }
-  
-  strip_quotes <- function(s) gsub("\"","",s)
+                            skip = 3) %>% 
+    janitor::clean_names() %>% 
+    dplyr::rename(deployid = deploy_id)
   
   gps_df <- gps_df %>% 
     dplyr::mutate(date_time = lubridate::parse_date_time(paste(day,time),"dbYHMS",tz = "UTC")) %>% 

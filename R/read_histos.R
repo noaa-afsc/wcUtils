@@ -101,12 +101,10 @@ read_histos <- function(histo_file, to_lower = TRUE, fix_csv = FALSE) {
     Bin72 = readr::col_double()
   )
   
-  histos_df <- readr::read_csv(histo_file, col_types = col_types) 
+  histos_df <- readr::read_csv(histo_file, col_types = col_types) %>% 
+    janitor::clean_names() %>% 
+    dplyr::rename(deployid = deploy_id)
   
-  colnames(histos_df) <- sub(" ", "_", colnames(histos_df))
-  if (to_lower == TRUE) {
-    colnames(histos_df) <- tolower(colnames(histos_df))
-  }
   #find the rows with the histo limit values and populate the histo_limits df
   histo_limits <- histos_df %>% 
     filter(grepl("LIMITS",histtype))
@@ -115,7 +113,6 @@ read_histos <- function(histo_file, to_lower = TRUE, fix_csv = FALSE) {
     histo_limits <- histo_limits %>% 
       .[,colSums(is.na(.))<nrow(.)]
   }
-  strip_quotes <- function(s) gsub("\"","",s)
   
   histos_df <- histos_df %>% 
     dplyr::filter(!grepl("LIMITS",histtype)) %>% 

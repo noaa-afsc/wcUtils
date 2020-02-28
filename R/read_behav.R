@@ -2,7 +2,7 @@
 #'
 #' @param behav_file file path or file connection to a *-Behavior.csv file
 #' @param to_lower whether to convert the column names to lower case
-#' @param fix_csv whether to attemtp to fix any comma, csv issues
+#' @param fix_csv whether to attempt to fix any comma, csv issues
 #'
 #' @return a data frame
 #' @export
@@ -31,18 +31,11 @@ read_behav <- function(behav_file,to_lower = TRUE, fix_csv = FALSE) {
     Deep = readr::col_integer()
   )
   
-  behav_df <- readr::read_csv(behav_file,col_types = col_types)
-  
-  colnames(behav_df) <- gsub(" ", "_", colnames(behav_df))
-  colnames(behav_df) <- gsub("-","",colnames(behav_df))
-  if (to_lower == TRUE) {
-    colnames(behav_df) <- tolower(colnames(behav_df))
-  }
-  
-  strip_quotes <- function(s) gsub("\"","",s)
+  behav_df <- readr::read_csv(behav_file,col_types = col_types) %>% 
+    janitor::clean_names() %>% 
+    dplyr::rename(deployid = deploy_id)
   
   behav_df <- behav_df %>% 
-    dplyr::mutate(deployid = strip_quotes(deployid)) %>% 
     dplyr::group_by(deployid) %>% 
     dplyr::arrange(deployid,start) %>%
     data.frame()
