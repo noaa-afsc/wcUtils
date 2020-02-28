@@ -8,7 +8,7 @@
 #' @export
 read_histos <- function(histo_file, to_lower = TRUE, fix_csv = FALSE) {
   if (fix_csv) {
-    wcUtils:::fixCSV(histo_file,overwrite = TRUE)
+    fixCSV(histo_file,overwrite = TRUE)
   }
   
   col_types <- readr::cols(

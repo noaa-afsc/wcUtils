@@ -8,7 +8,7 @@
 #' @export
 read_behav <- function(behav_file,to_lower = TRUE, fix_csv = FALSE) {
   if (fix_csv) {
-    wcUtils:::fixCSV(behav_file,overwrite = TRUE)
+    fixCSV(behav_file,overwrite = TRUE)
   }
 
   col_types <- readr::cols_only(

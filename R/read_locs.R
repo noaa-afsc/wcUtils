@@ -7,7 +7,7 @@
 #' @export
 read_locs <- function(loc_file,fix_csv = FALSE) {
   if (fix_csv) {
-  wcUtils:::fixCSV(loc_file,overwrite = TRUE)
+    fixCSV(loc_file,overwrite = TRUE)
   }
   
   col_types <- readr::cols(

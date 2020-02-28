@@ -8,7 +8,7 @@
 #' @export
 read_fastGPS <- function(gps_file,to_lower = TRUE, fix_csv = FALSE) {
   if (fix_csv) {
-  wcUtils:::fixCSV(gps_file, overwrite = TRUE, skip = 4)
+  fixCSV(gps_file, overwrite = TRUE, skip = 4)
   }
   
   col_types <- readr::cols_only(

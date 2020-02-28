@@ -8,7 +8,7 @@
 #' @export
 read_allmsg <- function(allmsg_file,to_lower = TRUE, fix_csv = FALSE) {
   if (fix_csv) {
-    wcUtils:::fixCSV(allmsg_file,overwrite = TRUE)
+    fixCSV(allmsg_file,overwrite = TRUE)
   }
   
   col_types <- readr::cols(
