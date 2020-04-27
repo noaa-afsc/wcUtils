@@ -13,7 +13,7 @@
 #' @return a list with ids (a vector of deployment ids) and a df (data frame of deployment summaries)
 #' @export
 wcGetDeployID <- function(xml_content,deployid=NULL) {
-  if(class(xml_content) == "response") {
+  if (class(xml_content) == "response") {
     warning('wcPOST response object provided, extracting content to xml',call.=FALSE)
     doc <- xml2::read_xml(httr::content(xml_content, 'raw'))
   } else if(class(xml_content) == "xml_document") {
