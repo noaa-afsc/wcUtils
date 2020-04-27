@@ -1,0 +1,125 @@
+Report for tag: 04L0041; named:  ... by owner: 
+     Kathy Frost
+     Alaska Dept of Fish & Game
+     1300 College Rd
+     Fairbanks, AK 99701-1599
+     
+     
+Password is SPLASH
+Argos PTT:  53607  (7AB8779 Hex)
+ Uplink / LUT id: 7854:121 with repetition rate: 45s (at-sea); 90s (haulout)
+Hardware version: 255.00; Software version: 1.00h
+SplashHost version: 1.00.0009
+Host Date: 22 Sep 2004 at 14:29:04
+Tag Date: 22 Sep 2004 at 21:29:05
+
+Channel 0 is Depth, measured over the range: -40 to 1000m, with resolution = 0.5m
+
+     Correction factor 0 = (0.0e0 x reading ^ 2) + (1.0 x reading) - 188.0
+     Correction factor 1 = -(1.866e-6 x reading ^ 2) + (0.9303 x reading) + 3.72
+     Correction factor 2 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Depth correction table verified
+
+     Compensation factors = -(4.442e-9 x Temperature ^ 3) + (1.002e-5 x Temperature ^ 2) 
+                                         - (0.0248 x Temperature) + 28.057
+     Depth Compensation table verified
+
+Channel 1 is Temperature, measured over the range: -40 to 60C, with resolution = 0.05C
+
+     Correction factor 0 = -(1.643e-4 x reading ^ 2) + (1.0076 x reading) + 0.04
+     Correction factor 1 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Correction factor 2 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Temperature correction table verified
+
+Channel 2 is Light Level, measured over the range: 0 to 256, with resolution = 0.25
+
+     Correction factor 0 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Correction factor 1 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Correction factor 2 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Light Level correction table verified
+
+     Compensation factors = (0.0e0 x Temperature ^ 3) + (0.0e0 x Temperature ^ 2) 
+                                         + (0.0 x Temperature) + 0.0
+     Light Level Compensation table verified
+
+Channel 6 is Battery Voltage, measured over the range: 0 to 5V, with resolution = 0.0049V
+
+     Correction factor 0 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Correction factor 1 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Correction factor 2 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Battery Voltage correction table verified
+
+Channel 7 is Wet/Dry Sensor, measured over the range: 0 to 255, with resolution = 1
+
+     Correction factor 0 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Correction factor 1 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Correction factor 2 = (0.0e0 x reading ^ 2) + (1.0 x reading) + 0.0
+     Wet/Dry Sensor correction table verified
+
+RTC Temp-Compensation table is not implemented
+
+Sample:
+     Depth: every 10 seconds
+     Temperature: every 10 seconds
+     Light Level: every 10 seconds
+     Battery Voltage: never
+     Wet/Dry Sensor: every 10 seconds
+Data will be archived regardless of wet/dry state
+
+Maximum-depth histograms are enabled with 10 bins:
+2, 4, 10, 20, 50, 76, 100, 150, 200, >200m
+
+Dive-duration histograms are enabled with 10 bins:
+30, 60, 90, 120, 150, 180, 240, 300, 360, >360sec
+
+Time-at-Temperature histograms are enabled with 10 bins:
+-2, -1, 0, 1, 2, 3, 4, 6, 8, >8C
+
+Time-at-Depth histograms are enabled with 12 bins:
+0, 2, 4, 10, 20, 50, 76, 100, 150, 200, 250, >250m
+
+Maximum-Depth and Dive-Duration histograms only record dives deeper than 2m
+Dive-Duration histograms are determined by time deeper than 2m
+Histograms are compiled over 6-hour periods sampling every 10seconds, starting at 02:00
+1-hour percentage timelines are enabled.  Threshold = wet/dry
+Histograms and timelines are transmitted to the satellite every 45 sec when the tag is at-sea
+and every 90 sec when the tag is on-land.
+The tag changes from at-sea mode to on-land mode when it has been dry for at least 30
+out of 60 seconds for 7 minutes.
+The tag will stop transmitting once it has been on-land for 4 hours
+The tag changes from on-land mode to at-sea mode when it has been wet for at least 30
+out of 60 seconds, whether stopped or not.
+The tag continues to transmit histograms and timelines for 2 days after the data are collected
+
+Transmit on these hours:
+0 - 23
+Transmit on these days:
+Jan: 1 - 31
+Feb: 1 - 28, 
+Mar: 1 - 31
+Apr: 1 - 30, 
+May: 1 - 31
+Jun: 1 - 30, 
+Jul: 1 - 31
+Aug: 1 - 31
+Sep: 1 - 30, 
+Oct: 1 - 31
+Nov: 1 - 30, 
+Dec: 1 - 31
+
+Daily transmission allowance:
+Jan: 300
+Feb: 300
+Mar: 300
+Apr: 300
+May: 300
+Jun: 300
+Jul: 300
+Aug: 300
+Sep: 300
+Oct: 300
+Nov: 300
+Dec: 300
+
+If possible, several histograms or timelines will be combined to form a 12-byte Argos transmission
+Short Status Messages will be transmitted

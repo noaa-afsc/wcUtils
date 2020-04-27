@@ -1,0 +1,2 @@
+DeployID,Ptt,Instr,SW,PercentDecoded,Passes,PercentArgosLoc,MsgPerPass,DS,DI,MinPower,AvgPower,MaxPower,MinInterval,EarliestXmitTime,LatestXmitTime,XmitDays,EarliestDataTime,LatestDataTime,DataDays,ReleaseDate,ReleaseType,DeployDate
+EB2005_5952_04L0041,53607,Splash,,88,3660,59,2,8377,,,,,44,17:03:11 02-Aug-2005,19:26:01 07-Feb-2006,189,17:06:00 02-Aug-2005,08:00:00 07-Feb-2006,189,,,

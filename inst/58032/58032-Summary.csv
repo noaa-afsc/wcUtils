@@ -1,0 +1,2 @@
+DeployID,Ptt,Instr,SW,PercentDecoded,Passes,PercentArgosLoc,MsgPerPass,DS,DI,MinPower,AvgPower,MaxPower,MinInterval,EarliestXmitTime,LatestXmitTime,XmitDays,EarliestDataTime,LatestDataTime,DataDays,ReleaseDate,ReleaseType,DeployDate
+PV2005_0265_05L0070,58032,Splash,,85,2517,48,2,6085,,,,,42,01:11:18 20-Sep-2005,17:19:54 11-Jun-2006,265,00:00:00 17-Sep-2005,06:00:00 11-Jun-2006,267,,,

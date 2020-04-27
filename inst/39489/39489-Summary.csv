@@ -1,0 +1,2 @@
+DeployID,Ptt,Instr,SW,PercentDecoded,Passes,PercentArgosLoc,MsgPerPass,DS,DI,MinPower,AvgPower,MaxPower,MinInterval,EarliestXmitTime,LatestXmitTime,XmitDays,EarliestDataTime,LatestDataTime,DataDays,ReleaseDate,ReleaseType,DeployDate
+EB2011_3000_10A0219,39489,Mk10,,93,9806,99,3,27762,,,,,42,22:54:13 16-Jun-2011,20:28:51 01-Apr-2012,290,22:00:00 16-Jun-2011,09:00:00 01-Apr-2012,289,,,
