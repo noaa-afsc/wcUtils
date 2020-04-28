@@ -12,41 +12,48 @@
 #' @export
 tidyDiveDurations <- function(histos) {
   if(!is.null(histos$limits)) {
-  limits <- dplyr::filter(histos$limits,histtype=='DiveDurationLIMITS') %>% 
-    dplyr::select(-histtype) %>% 
-    tidyr::gather(bin,bin_duration_limit,starts_with('bin'))
-  if(nrow(limits)<1) {
-    warning("Dive duration limits not correctly specified. Will use generic bin labels")
+    limits <- dplyr::filter(histos$limits,hist_type == 'DiveDurationLIMITS') %>% 
+      dplyr::select(-hist_type) %>% 
+      tidyr::gather(bin,bin_upper_limit,dplyr::starts_with('bin'))
+    if(nrow(limits)<1) {
+      warning("Dive Duration limits not correctly specified. Will use generic bin labels")
+    }
   }
-  }
-  histos <- histos$histos
-  types <- dplyr::group_by(histos,histtype)
-  t <- dplyr::summarise(types, n = n())
-  if (all(t$histtype != c('DiveDuration'))) {
-    warning('No DiveDuration data found',call. = FALSE)
+  types <- dplyr::group_by(histos$histos,hist_type)
+  t <- dplyr::summarise(types, n = dplyr::n())
+  if (all(t$hist_type != c('DiveDuration'))) {
+    warning('No Dive Duration data found',call. = FALSE)
     return(NULL)
   }
   if(is.null(histos$limits)) {
-    warning("No dive duration limits found. Will use generic bin labels",call.=FALSE)
+    warning("No Dive Duration limits found. Will use generic bin labels",call.=FALSE)
   }
   
-  histos <- dplyr::filter(histos,
-                          histtype=='DiveDuration')
-  if(!is.null(histos$limits) && nrow(limits)==1) {
-  diveduration <- histos %>%
-    tidyr::gather(bin,num_dives, starts_with('bin')) %>%
-    dplyr::rename(datadatetime=date) %>% 
-    dplyr::select(one_of(c("deployid","datadatetime","bin","num_dives"))) %>%
-    dplyr::inner_join(limits) %>% 
-    dplyr::select(deployid,datadatetime,num_dives,bin_duration_limit,bin) %>% 
-    dplyr::mutate(bin_duration_limit=format_bins(bin_duration_limit)) %>% 
-    dplyr::arrange(deployid,datadatetime,bin) 
-  } else {
-    diveduration <- histos %>%
+  histos <- dplyr::filter(histos$histos,
+                          hist_type == 'DiveDuration')
+  
+  if(!is.null(limits)) {
+    diveduration_out <- histos %>%
       tidyr::gather(bin,num_dives, starts_with('bin')) %>%
-      dplyr::rename(datadatetime=date) %>% 
-      dplyr::select(one_of(c("deployid","datadatetime","bin","num_dives"))) %>%
-      dplyr::select(deployid,datadatetime,num_dives,bin) %>% 
-      dplyr::arrange(deployid,datadatetime,bin) 
+      dplyr::rename(diveduration_dt=date) %>% 
+      dplyr::select(one_of(c("deployid","diveduration_dt","bin","num_dives"))) %>%
+      dplyr::inner_join(limits) %>% 
+      dplyr::select(deployid,diveduration_dt,bin,bin_upper_limit,num_dives) %>% 
+      dplyr::mutate(bin = factor(bin, 
+                                 levels = paste0("bin",1:72), 
+                                 ordered = TRUE)) %>% 
+      dplyr::arrange(deployid,diveduration_dt,bin) 
+  } else {
+    diveduration_out <- histos %>%
+      tidyr::gather(bin,num_dives, starts_with('bin')) %>%
+      dplyr::rename(diveduration_dt=date) %>% 
+      dplyr::select(one_of(c("deployid","diveduration_dt","bin","num_dives"))) %>%
+      dplyr::select(deployid,diveduration_dt,bin,num_dives) %>% 
+      dplyr::mutate(bin = factor(bin, 
+                                 levels = paste0("bin",1:72), 
+                                 ordered = TRUE)) %>% 
+      dplyr::arrange(deployid,diveduration_dt,bin) 
   }
+  
+  return(diveduration_out)
 }

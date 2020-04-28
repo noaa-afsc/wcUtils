@@ -107,7 +107,7 @@ read_histos <- function(histo_file, to_lower = TRUE, fix_csv = FALSE) {
   
   #find the rows with the histo limit values and populate the histo_limits df
   histo_limits <- histos_df %>% 
-    filter(grepl("LIMITS",.$hist_type))
+    dplyr::filter(grepl("LIMITS",.$hist_type))
   
   if (nrow(histo_limits) > 0) {
     histo_limits <- histo_limits %>% 
