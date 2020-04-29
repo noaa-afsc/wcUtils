@@ -47,24 +47,24 @@ tidyTimeAtDepth <- function(histos) {
   if(!is.null(limits)) {
   tad_out <- histos %>%
     tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
-    dplyr::rename(tad_dt=date) %>% 
-    dplyr::select(one_of(c("deployid","tad_dt","bin","pct_tad"))) %>%
+    dplyr::rename(tad_start_dt=date) %>% 
+    dplyr::select(one_of(c("deployid","tad_start_dt","bin","pct_tad"))) %>%
     dplyr::inner_join(limits) %>% 
-    dplyr::select(deployid,tad_dt,bin,bin_upper_limit,pct_tad) %>% 
+    dplyr::select(deployid,tad_start_dt,bin,bin_upper_limit,pct_tad) %>% 
     dplyr::mutate(bin = factor(bin, 
                                levels = paste0("bin",1:72), 
                                ordered = TRUE)) %>% 
-    dplyr::arrange(deployid,tad_dt,bin) 
+    dplyr::arrange(deployid,tad_start_dt,bin) 
   } else {
     tad_out <- histos %>%
       tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
-      dplyr::rename(tad_dt=date) %>% 
-      dplyr::select(one_of(c("deployid","tad_dt","bin","pct_tad"))) %>%
-      dplyr::select(deployid,tad_dt,bin,pct_tad) %>% 
+      dplyr::rename(tad_start_dt=date) %>% 
+      dplyr::select(one_of(c("deployid","tad_start_dt","bin","pct_tad"))) %>%
+      dplyr::select(deployid,tad_start_dt,bin,pct_tad) %>% 
       dplyr::mutate(bin = factor(bin, 
                                  levels = paste0("bin",1:72), 
                                  ordered = TRUE)) %>% 
-      dplyr::arrange(deployid,tad_dt,bin) 
+      dplyr::arrange(deployid,tad_start_dt,bin) 
   }
   
   return(tad_out)
