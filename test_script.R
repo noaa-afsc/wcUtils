@@ -12,5 +12,6 @@ histos_df <- dir_ls(path = here::here('inst'),
   map(read_histos)
 
 test_tad <- tidyTimeAtDepth(histos_df[[6]])
+test_percent <- tidyTimelines(histos_df[[6]])
 test_divedepth <- tidyDiveDepths(histos_df[[6]])
 test_diveduration <- tidyDiveDurations(histos_df[[6]])
