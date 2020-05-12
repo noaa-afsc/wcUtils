@@ -20,11 +20,11 @@
 #'
 #' @param histos a list returned from \code{read_histos}
 #'
-#' @return a data frame with tidy, narrow data structure and actual
+#' @return a tibble with tidy, narrow data structure and actual
 #'   time-at-depth bin limits (when provided)
 #' @export
 tidyTimeAtDepth <- function(histos) {
-  if(!is.null(histos$limits)) {
+  if(nrow(histos$limits > 0)) {
   limits <- dplyr::filter(histos$limits,hist_type == 'TADLIMITS') %>% 
     dplyr::select(-hist_type) %>% 
     tidyr::gather(bin,bin_upper_limit,dplyr::starts_with('bin'))
@@ -38,13 +38,15 @@ tidyTimeAtDepth <- function(histos) {
     warning('No Time-At-Depth data found',call. = FALSE)
     return(NULL)
   }
-  if(is.null(histos$limits)) {
+  if(nrow(histos$limits) < 1) {
     warning("No TAD limits found. Will use generic bin labels",call.=FALSE)
   }
   
+  if(nrow(histos$limits) > 0) {
+    
   histos <- dplyr::filter(histos$histos,
                           hist_type == 'TAD')
-  if(!is.null(limits)) {
+  
   tad_out <- histos %>%
     tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
     dplyr::rename(tad_start_dt=date) %>% 
@@ -56,6 +58,8 @@ tidyTimeAtDepth <- function(histos) {
                                ordered = TRUE)) %>% 
     dplyr::arrange(deployid,tad_start_dt,bin) 
   } else {
+    histos <- dplyr::filter(histos$histos,
+                            hist_type == 'TAD')
     tad_out <- histos %>%
       tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
       dplyr::rename(tad_start_dt=date) %>% 
