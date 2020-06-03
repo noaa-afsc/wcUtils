@@ -29,7 +29,7 @@ tidyTimelines <- function(histos,all_types = FALSE) {
     } else if (nrow(t) > 1) {
       type <- as.character(subset(t,n = max(n))$hist_type[1])
     }
-    if (type %in% c("Percent","1Percent") && !all_types) {
+    if (type %in% c("Percent","1Percent") && isTRUE(all_types)) {
       histos_sub <- dplyr::filter(histos,
                                   hist_type == type,
                                   lubridate::hour(date) == 0)
@@ -42,7 +42,7 @@ tidyTimelines <- function(histos,all_types = FALSE) {
         dplyr::select(one_of(c("deployid","hist_type","timeline_start_dt","percent_dry"))) %>%
         dplyr::arrange(deployid,timeline_start_dt)
     }
-    if (type == "TwentyMinTimeline" && !all_types) {
+    if (type == "TwentyMinTimeline" && isTRUE(all_types)) {
       histos_sub <- dplyr::filter(histos,
                                   histtype == type,
                                   lubridate::hour(date) == 0)
