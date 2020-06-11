@@ -20,7 +20,7 @@ tidyTimelines <- function(histos,all_types = FALSE) {
       return(NULL)
     }
     types <- dplyr::group_by(histos,hist_type)
-    t <- dplyr::summarise(types, n = n())
+    t <- dplyr::summarise(types, n = dplyr::n())
     if (all(!t$hist_type %in% c('Percent','1Percent','TwentyMinTimeline'))) {
       stop('No timeline histogram types found',call. = FALSE)
     }
