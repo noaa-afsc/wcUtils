@@ -45,11 +45,10 @@ read_fastGPS <- function(gps_file,to_lower = TRUE, fix_csv = FALSE) {
   gps_df <- readr::read_csv(gps_file, col_types = col_types,
                             skip = 3) %>% 
     janitor::clean_names() %>% 
-    dplyr::rename(deployid = deploy_id)
+    dplyr::rename(deployid = name)
   
   gps_df <- gps_df %>% 
     dplyr::mutate(date_time = lubridate::parse_date_time(paste(day,time),"dbYHMS",tz = "UTC")) %>% 
-    dplyr::rename(deployid = name) %>% 
     dplyr::select(-day,-time) %>% 
     dplyr::group_by(deployid) %>% 
     dplyr::arrange(deployid,date_time) %>% 
