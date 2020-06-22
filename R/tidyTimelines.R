@@ -52,6 +52,8 @@ tidyTimelines <- function(histos, row_min = 1) {
     return(NULL)
   }
   
+  types <- histos %>% dplyr::distinct(hist_type) %>% dplyr::pull()
+  
   if (all(types %in% c("Percent", "1Percent"))) {
     histos_sub <- dplyr::filter(histos,
                                 lubridate::hour(date) == 0)
