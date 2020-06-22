@@ -30,7 +30,7 @@ tidyTimelines <- function(histos, row_min = 1) {
                           hist_type %in% c('Percent', '1Percent', 
                                            'TwentyMinTimeline'))
   
-  if (nrow(histos == 0)) {
+  if (nrow(histos) == 0) {
     rlang::warn(
       glue::glue_col(
         "{red {cli::symbol$cross} No timeline histogram \\
