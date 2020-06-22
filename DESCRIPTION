@@ -27,5 +27,8 @@ Imports:
     jsonlite,
     data.table,
     janitor,
-    fs
+    fs,
+    crayon,
+    rlang,
+    glue
 RoxygenNote: 7.0.2
