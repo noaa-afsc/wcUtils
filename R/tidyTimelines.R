@@ -54,6 +54,15 @@ tidyTimelines <- function(histos, row_min = 1) {
   
   types <- histos %>% dplyr::distinct(hist_type) %>% dplyr::pull()
   
+  if (length(types) > 1) {
+    rlang::warn(
+      glue::glue(
+        "{blue {cli::symbol$info} more than 1 timeline type found}
+         {blue {cli::symbol$info} hist_types found: {types}}"
+      )
+    )
+  }
+  
   if (all(types %in% c("Percent", "1Percent"))) {
     histos_sub <- dplyr::filter(histos,
                                 lubridate::hour(date) == 0)
