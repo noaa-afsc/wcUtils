@@ -24,29 +24,35 @@
 #'   time-at-depth bin limits (when provided)
 #' @export
 tidyTimeAtDepth <- function(histos) {
-  if(nrow(histos$limits > 0)) {
-  limits <- dplyr::filter(histos$limits,hist_type == 'TADLIMITS') %>% 
-    dplyr::select(-hist_type) %>% 
-    tidyr::gather(bin,bin_upper_limit,dplyr::starts_with('bin'))
-  if(nrow(limits)<1) {
-    warning("Time-At-Depth limits not correctly specified. Will use generic bin labels")
-  }
-  }
-  types <- dplyr::group_by(histos$histos,hist_type)
-  t <- dplyr::summarise(types, n = dplyr::n())
-  if (all(t$hist_type != c('TAD'))) {
-    warning('No Time-At-Depth data found',call. = FALSE)
+  histos_tbl <- histos$histos %>% 
+    dplyr::filter(hist_type %in% c('TAD'))
+  
+  if (nrow(histos_tbl) == 0) {
+    rlang::warn(
+      glue::glue_col(
+        "{red {cli::symbol$cross} No Time At Depth histogram \\
+                 types found}
+                 {blue {cli::symbol$info} returning NULL}"
+      )
+    )
     return(NULL)
   }
-  if(nrow(histos$limits) < 1) {
-    warning("No TAD limits found. Will use generic bin labels",call.=FALSE)
+  
+  limits <- histos$limits
+  if (nrow(limits) == 0) {
+    rlang::warn(
+      glue::glue_col(
+        "{red {cli::symbol$cross} Time At Depth limits not correctly specified.}
+                 {blue {cli::symbol$info} Will use generic bin labels.}"
+      )
+    )
   }
-  
-  if(nrow(histos$limits) > 0) {
-    
-  histos <- dplyr::filter(histos$histos,
-                          hist_type == 'TAD')
-  
+  if (nrow(limits) > 0) {
+    limits <- dplyr::filter(histos$limits,hist_type == 'TADLIMITS') %>% 
+      dplyr::select(-hist_type) %>% 
+      tidyr::gather(bin,bin_upper_limit,dplyr::starts_with('bin'))
+  }
+  if (nrow(limits) > 0) {
   tad_out <- histos %>%
     tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
     dplyr::rename(tad_start_dt=date) %>% 
