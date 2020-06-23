@@ -29,10 +29,10 @@ tidyTimeAtDepth <- function(histos) {
   
   if (nrow(histos_tbl) == 0) {
     rlang::warn(
-      glue::glue_col(
-        "{red {cli::symbol$cross} No Time At Depth histogram \\
-                 types found}
-                 {blue {cli::symbol$info} returning NULL}"
+      glue::glue(
+        "{cli::symbol$cross} No Time At Depth histogram \\
+                 types found
+         {cli::symbol$info} returning NULL"
       )
     )
     return(NULL)
@@ -41,9 +41,9 @@ tidyTimeAtDepth <- function(histos) {
   limits <- histos$limits
   if (nrow(limits) == 0) {
     rlang::warn(
-      glue::glue_col(
-        "{red {cli::symbol$cross} Time At Depth limits not correctly specified.}
-                 {blue {cli::symbol$info} Will use generic bin labels.}"
+      glue::glue(
+        "{cli::symbol$cross} Time At Depth limits not correctly specified.
+         {cli::symbol$info} Will use generic bin labels."
       )
     )
   }

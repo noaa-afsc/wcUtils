@@ -16,10 +16,10 @@ tidyDiveDepths <- function(histos) {
   
   if (nrow(histos_tbl) == 0) {
     rlang::warn(
-      glue::glue_col(
-        "{red {cli::symbol$cross} No Dive Depth histogram \\
-                 types found}
-                 {blue {cli::symbol$info} returning NULL}"
+      glue::glue(
+        "{cli::symbol$cross} No Dive Depth histogram \\
+                 types found
+         {cli::symbol$info} returning NULL"
       )
     )
     return(NULL)
@@ -28,9 +28,9 @@ tidyDiveDepths <- function(histos) {
   limits <- histos$limits
   if (nrow(limits) == 0) {
     rlang::warn(
-      glue::glue_col(
-        "{red {cli::symbol$cross} Dive Depth limits not correctly specified.}
-                 {blue {cli::symbol$info} Will use generic bin labels.}"
+      glue::glue(
+        "{cli::symbol$cross} Dive Depth limits not correctly specified.
+         {cli::symbol$info} Will use generic bin labels."
       )
     )
   }

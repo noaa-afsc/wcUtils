@@ -32,10 +32,10 @@ tidyTimelines <- function(histos, row_min = 1) {
   
   if (nrow(histos) == 0) {
     rlang::warn(
-      glue::glue_col(
-        "{red {cli::symbol$cross} No timeline histogram \\
-                 types found}
-                 {blue {cli::symbol$info} returning NULL}"
+      glue::glue(
+        "{cli::symbol$cross} No timeline histogram \\
+                 types found
+         {cli::symbol$info} returning NULL"
       )
     )
     return(NULL)
@@ -43,10 +43,10 @@ tidyTimelines <- function(histos, row_min = 1) {
   if (nrow(histos) < row_min) {
     rlang::warn(
       glue::glue(
-        "{red {cli::symbol$cross} The number of rows of \\
-                 timeline data found is less than specified by `row_min`}
-                 {blue {cli::symbol$info} n rows found is {nrow(histos)}}
-                 {blue {cli::symbol$info} returning NULL}"
+        "{cli::symbol$cross} The number of rows of \\
+                 timeline data found is less than specified by `row_min`
+         {cli::symbol$info} n rows found is {nrow(histos)}
+         {cli::symbol$info} returning NULL"
       )
     )
     return(NULL)
@@ -57,8 +57,8 @@ tidyTimelines <- function(histos, row_min = 1) {
   if (length(types) > 1) {
     rlang::warn(
       glue::glue(
-        "{blue {cli::symbol$info} more than 1 timeline type found}
-         {blue {cli::symbol$info} hist_types found: {types}}"
+        "{cli::symbol$info} more than 1 timeline type found
+         {cli::symbol$info} hist_types found: {types}"
       )
     )
   }
