@@ -53,7 +53,7 @@ tidyTimeAtDepth <- function(histos) {
       tidyr::gather(bin,bin_upper_limit,dplyr::starts_with('bin'))
   }
   if (nrow(limits) > 0) {
-  tad_out <- histos %>%
+  tad_out <- histos_tbl %>%
     tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
     dplyr::rename(tad_start_dt=date) %>% 
     dplyr::select(one_of(c("deployid","tad_start_dt","bin","pct_tad"))) %>%
@@ -64,9 +64,7 @@ tidyTimeAtDepth <- function(histos) {
                                ordered = TRUE)) %>% 
     dplyr::arrange(deployid,tad_start_dt,bin) 
   } else {
-    histos <- dplyr::filter(histos$histos,
-                            hist_type == 'TAD')
-    tad_out <- histos %>%
+    tad_out <- histos_tbl %>%
       tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
       dplyr::rename(tad_start_dt=date) %>% 
       dplyr::select(one_of(c("deployid","tad_start_dt","bin","pct_tad"))) %>%
