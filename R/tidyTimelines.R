@@ -115,7 +115,7 @@ tidyTimelines <- function(histos, row_min = 1) {
       any(types == "TwentyMinTimeline")) {
     rlang::inform(
       glue::glue_col(
-        "{blue {cli::symbols$info} hourly and 20-minute timeline data found"
+        "{cli::symbol$info} hourly and 20-minute timeline data found"
       )
     )
     histos_sub <- dplyr::filter(histos,
