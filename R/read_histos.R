@@ -19,7 +19,7 @@ read_histos <- function(histo_file, to_lower = TRUE, dt_fmt = "%H:%M:%S %d-%b-%Y
     Source = readr::col_character(),
     Instr = readr::col_character(),
     HistType = readr::col_character(),
-    Date = readr::col_datetime(),
+    Date = readr::col_datetime(dt_fmt),
     `Time Offset` = readr::col_double(),
     Count = readr::col_integer(),
     BadTherm = readr::col_integer(),
