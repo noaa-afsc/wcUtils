@@ -27,5 +27,9 @@ Imports:
     jsonlite,
     data.table,
     janitor,
-    fs
-RoxygenNote: 7.0.2
+    fs,
+    rlang,
+    glue
+RoxygenNote: 7.1.0
+Suggests: 
+    testthat

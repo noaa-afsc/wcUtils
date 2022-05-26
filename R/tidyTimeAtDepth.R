@@ -24,30 +24,36 @@
 #'   time-at-depth bin limits (when provided)
 #' @export
 tidyTimeAtDepth <- function(histos) {
-  if(nrow(histos$limits > 0)) {
-  limits <- dplyr::filter(histos$limits,hist_type == 'TADLIMITS') %>% 
-    dplyr::select(-hist_type) %>% 
-    tidyr::gather(bin,bin_upper_limit,dplyr::starts_with('bin'))
-  if(nrow(limits)<1) {
-    warning("Time-At-Depth limits not correctly specified. Will use generic bin labels")
-  }
-  }
-  types <- dplyr::group_by(histos$histos,hist_type)
-  t <- dplyr::summarise(types, n = dplyr::n())
-  if (all(t$hist_type != c('TAD'))) {
-    warning('No Time-At-Depth data found',call. = FALSE)
+  histos_tbl <- histos$histos %>% 
+    dplyr::filter(hist_type %in% c('TAD'))
+  
+  if (nrow(histos_tbl) == 0) {
+    rlang::warn(
+      glue::glue(
+        "{cli::symbol$cross} No Time At Depth histogram \\
+                 types found
+         {cli::symbol$info} returning NULL"
+      )
+    )
     return(NULL)
   }
-  if(nrow(histos$limits) < 1) {
-    warning("No TAD limits found. Will use generic bin labels",call.=FALSE)
+  
+  limits <- histos$limits
+  if (nrow(limits) == 0) {
+    rlang::warn(
+      glue::glue(
+        "{cli::symbol$cross} Time At Depth limits not correctly specified.
+         {cli::symbol$info} Will use generic bin labels."
+      )
+    )
   }
-  
-  if(nrow(histos$limits) > 0) {
-    
-  histos <- dplyr::filter(histos$histos,
-                          hist_type == 'TAD')
-  
-  tad_out <- histos %>%
+  if (nrow(limits) > 0) {
+    limits <- dplyr::filter(histos$limits,hist_type == 'TADLIMITS') %>% 
+      dplyr::select(-hist_type) %>% 
+      tidyr::gather(bin,bin_upper_limit,dplyr::starts_with('bin'))
+  }
+  if (nrow(limits) > 0) {
+  tad_out <- histos_tbl %>%
     tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
     dplyr::rename(tad_start_dt=date) %>% 
     dplyr::select(one_of(c("deployid","tad_start_dt","bin","pct_tad"))) %>%
@@ -58,9 +64,7 @@ tidyTimeAtDepth <- function(histos) {
                                ordered = TRUE)) %>% 
     dplyr::arrange(deployid,tad_start_dt,bin) 
   } else {
-    histos <- dplyr::filter(histos$histos,
-                            hist_type == 'TAD')
-    tad_out <- histos %>%
+    tad_out <- histos_tbl %>%
       tidyr::gather(bin,pct_tad, starts_with('bin')) %>%
       dplyr::rename(tad_start_dt=date) %>% 
       dplyr::select(one_of(c("deployid","tad_start_dt","bin","pct_tad"))) %>%

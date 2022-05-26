@@ -4,21 +4,33 @@
 \alias{tidyTimelines}
 \title{Apply 'tidy' data principles to the timeline histogram data stream}
 \usage{
-tidyTimelines(histos, all_types = FALSE)
+tidyTimelines(histos, row_min = 1)
 }
 \arguments{
 \item{histos}{a list returned from \code{read_histos}}
 
-\item{all_types}{by default the dominant histtype is chosen; \code{all_types = TRUE} will return records of all types found}
+\item{row_min}{user defined minimum timeline records required; \code{row_min
+= 2} will return NULL unless at least 1 records are found.}
 }
 \value{
-a data frame with tidy, narrow data structure and actual time periods in place of bins
+a data frame with tidy, narrow data structure and actual time periods
+  in place of bins
 }
 \description{
 \code{tidyTimelines} returns a 'tidy'd' data frame of timeline data
 }
 \details{
-The histogram data stream is provided in a 'wide' format (each row represents a time period and the observed values are provided in 1 to 72 'bin' columns). This format can be difficult to work with in R and other data analysis platforms (e.g. database tables), so we use the \code{tidyr} and \code{dplyr} packages to manipulate the data into a more flexible, 'narrow' format. This results in a data structure where every row represents a single observation.
+The histogram data stream is provided in a 'wide' format (each row represents
+a time period and the observed values are provided in 1 to 72 'bin' columns).
+This format can be difficult to work with in R and other data analysis
+platforms (e.g. database tables), so we use the \code{tidyr} and \code{dplyr}
+packages to manipulate the data into a more flexible, 'narrow' format. This
+results in a data structure where every row represents a single observation.
 
-This is implemented, here, with the timeline data. For timeline data, tag 'dryness' is provided as either a percentage of each hour the tag was dry or as a binary (1 or 0) value representing whether a tag was dry for a majority of a given 20-minute period. For both of these situations, the values for the 'bin' columns are predictable and we can, in addition to tidying the data structure, also turn the bin values into actual time periods
+This is implemented, here, with the timeline data. For timeline data, tag
+'dryness' is provided as either a percentage of each hour the tag was dry or
+as a binary (1 or 0) value representing whether a tag was dry for a majority
+of a given 20-minute period. For both of these situations, the values for the
+'bin' columns are predictable and we can, in addition to tidying the data
+structure, also turn the bin values into actual time periods.
 }

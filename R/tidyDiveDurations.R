@@ -11,29 +11,37 @@
 #' @return a data frame with tidy, narrow data structure and actual dive duration bin limits (when provided)
 #' @export
 tidyDiveDurations <- function(histos) {
-  if(!is.null(histos$limits)) {
+  histos_tbl <- histos$histos %>% 
+    dplyr::filter(hist_type %in% c('DiveDuration'))
+  
+  if (nrow(histos_tbl) == 0) {
+    rlang::warn(
+      glue::glue(
+        "{cli::symbol$cross} No Dive Duration histogram \\
+                 types found
+         {cli::symbol$info} returning NULL"
+      )
+    )
+    return(NULL)
+  }
+  
+  limits <- histos$limits
+  if (nrow(limits) == 0) {
+    rlang::warn(
+      glue::glue(
+        "{cli::symbol$cross} Dive Duration limits not correctly specified.
+         {cli::symbol$info} Will use generic bin labels."
+      )
+    )
+  }
+  if (nrow(limits) > 0) {
     limits <- dplyr::filter(histos$limits,hist_type == 'DiveDurationLIMITS') %>% 
       dplyr::select(-hist_type) %>% 
       tidyr::gather(bin,bin_upper_limit,dplyr::starts_with('bin'))
-    if(nrow(limits)<1) {
-      warning("Dive Duration limits not correctly specified. Will use generic bin labels")
-    }
-  }
-  types <- dplyr::group_by(histos$histos,hist_type)
-  t <- dplyr::summarise(types, n = dplyr::n())
-  if (all(t$hist_type != c('DiveDuration'))) {
-    warning('No Dive Duration data found',call. = FALSE)
-    return(NULL)
-  }
-  if(is.null(histos$limits)) {
-    warning("No Dive Duration limits found. Will use generic bin labels",call.=FALSE)
   }
   
-  histos <- dplyr::filter(histos$histos,
-                          hist_type == 'DiveDuration')
-  
-  if(!is.null(limits)) {
-    diveduration_out <- histos %>%
+  if(nrow(limits) > 0) {
+    diveduration_out <- histos_tbl %>%
       tidyr::gather(bin,num_dives, starts_with('bin')) %>%
       dplyr::rename(diveduration_dt=date) %>% 
       dplyr::select(one_of(c("deployid","diveduration_dt","bin","num_dives"))) %>%
@@ -44,7 +52,7 @@ tidyDiveDurations <- function(histos) {
                                  ordered = TRUE)) %>% 
       dplyr::arrange(deployid,diveduration_dt,bin) 
   } else {
-    diveduration_out <- histos %>%
+    diveduration_out <- histos_tbl %>%
       tidyr::gather(bin,num_dives, starts_with('bin')) %>%
       dplyr::rename(diveduration_dt=date) %>% 
       dplyr::select(one_of(c("deployid","diveduration_dt","bin","num_dives"))) %>%
