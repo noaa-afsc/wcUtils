@@ -20,15 +20,15 @@
 #'   status,timelines,messages)
 #' @importFrom magrittr %>%
 #' @export
-wcGetDownload <- function(id,wc.key=Sys.getenv("wcAccessKey"),
-                          wc.secret=Sys.getenv("wcSecretKey"),
+wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
+                          wc.secret=Sys.getenv("WCSECRETKEY"),
                           keyfile=NULL, tidy=TRUE) {
   download_params <- paste("action=download_deployment&id=",id,sep="")
     
     if (!is.null(keyfile)) {
       keys <- jsonlite::fromJSON(keyfile)
-      wc.key <- keys$wcAccessKey
-      wc.secret <- keys$wcSecretKey
+      wc.key <- keys$WCACCESSKEY
+      wc.secret <- keys$WCSECRETKEY
       r <- wcPOST(wc.key,wc.secret,
                   params=download_params)
     }
