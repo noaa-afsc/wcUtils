@@ -15,11 +15,11 @@ wcGetRecentIDs <- function(xml_content,days=14) {
     warning('wcPOST response object provided, extracting content to xml',call.=FALSE)
     xml_content <- httr::content(xml_content)
   }
-  start_epoch <- as.numeric(now()-lubridate::days(14))
+  start_epoch <- as.numeric(lubridate::now()-lubridate::days(days))
   xpath <- paste("//data/deployment/argos/last_uplink_date",
                  "[number() > number(",
                  start_epoch,
                  ")]/../../id",sep="")
-  ids <- XML::xpathSApply(xml_content,xpath,XML::xmlValue)
+  ids <- XML::xpathSApply(XML::xmlParse(xml_content),xpath,XML::xmlValue)
   return(ids)
 }
