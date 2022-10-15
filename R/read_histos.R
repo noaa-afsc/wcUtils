@@ -2,11 +2,12 @@
 #'
 #' @param histo_file file path or file connection to a *-Histos.csv file
 #' @param to_lower whether to convert the column names to lower case
+#' @param dt_fmt format for the Date column
 #' @param fix_csv whether to attemtp to fix any comma, csv issues
 #'
 #' @return a list of two data frames
 #' @export
-read_histos <- function(histo_file, to_lower = TRUE, fix_csv = FALSE) {
+read_histos <- function(histo_file, to_lower = TRUE, dt_fmt = "%H:%M:%S %d-%b-%Y", fix_csv = FALSE) {
   if (fix_csv) {
     fixCSV(histo_file,overwrite = TRUE)
   }
@@ -18,7 +19,7 @@ read_histos <- function(histo_file, to_lower = TRUE, fix_csv = FALSE) {
     Source = readr::col_character(),
     Instr = readr::col_character(),
     HistType = readr::col_character(),
-    Date = readr::col_datetime("%H:%M:%S %d-%b-%Y"),
+    Date = readr::col_datetime(dt_fmt),
     `Time Offset` = readr::col_double(),
     Count = readr::col_integer(),
     BadTherm = readr::col_integer(),
