@@ -7,18 +7,18 @@
 #' 
 #' @param wc.key public access key (default retrieves from option value set in .Renviron)
 #' @param wc.secret secret access key (default retrieves from option value set in .Renviron)
-#' @param keyfile path to a json formatted keyfile with wcAccessKey and wcSecretKey
+#' @param keyfile path to a json formatted keyfile with WCACCESSKEY and wcSecretKey
 
 #' @return a path to the zip file
 #' 
 #' @export
-wcGetZip <- function(id,wc.key = Sys.getenv("wcAccessKey"),
-                     wc.secret = Sys.getenv("wcSecretKey"),
+wcGetZip <- function(id,wc.key = Sys.getenv("WCACCESSKEY"),
+                     wc.secret = Sys.getenv("WCACCESSKEY"),
                      keyfile=NULL) {
   download_params <- paste("action=download_deployment&id=",id,sep = "")
   if (!is.null(keyfile)) {
     keys <- jsonlite::fromJSON(keyfile)
-    wc.key <- keys$wcAccessKey
+    wc.key <- keys$WCACCESSKEY
     wc.secret <- keys$wcSecretKey
   }
   

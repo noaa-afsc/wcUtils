@@ -22,26 +22,26 @@
 #'   option. An alternative is to read values from a different file in the home directory or to use
 #'   OS level environment variables.
 #'   
-#'   preformatted{ wcAccessKey = 'E4iZhsfdje7590JDNR/VARTEZyhfwb84485X5Xw86ow=' 
-#'   wcSecretKey = 'WIRJFYhfjdsuSEqKoE7WSDvXUHzVP0pHDJSscmeA7fw=' }
+#'   preformatted{ WCACCESSKEY = 'E4iZhsfdje7590JDNR/VARTEZyhfwb84485X5Xw86ow=' 
+#'   WCSECRETKEY = 'WIRJFYhfjdsuSEqKoE7WSDvXUHzVP0pHDJSscmeA7fw=' }
 #'   
 #' @param wc.key public access key (default retrieves from option value set in .Renviron)
 #' @param wc.secret secret access key (default retrieves from option value set in .Renviron)
-#' @param keyfile path to a json formatted keyfile with wcAccessKey and wcSecretKey
+#' @param keyfile path to a json formatted keyfile with WCACCESSKEY and WCSECRETKEY
 #' @param params POST message (default returns a list of deployments)
 #'   
 #' @return an \code{httr} response object is returned. Content of the response can be obtained with
 #'   the \code{httr::content()} function.
 #' @export
-wcPOST <- function(wc.key=Sys.getenv("wcAccessKey"),
-                   wc.secret=Sys.getenv("wcSecretKey"),
+wcPOST <- function(wc.key=Sys.getenv("WCACCESSKEY"),
+                   wc.secret=Sys.getenv("WCSECRETKEY"),
                    keyfile=NULL,
                    params="action=get_deployments") {
   
   if (!is.null(keyfile)) {
     keys <- jsonlite::fromJSON(keyfile)
-    wc.key <- keys$wcAccessKey
-    wc.secret <- keys$wcSecretKey
+    wc.key <- keys$WCACCESSKEY
+    wc.secret <- keys$WCSECRETKEY
   }
   
   if (is.null(wc.key) | is.null(wc.secret)) {
