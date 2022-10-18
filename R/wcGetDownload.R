@@ -40,7 +40,6 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
       stop("Wildlife Computers keys not found. Either use .Renviron (see help) or a keyfile.json")
     }
   
-  
   temp_file <- tempfile()
   writeBin(httr::content(r, "raw"), temp_file)
   temp_path <- tempfile()
@@ -61,29 +60,34 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
   all_locs_file <- list.files(temp_path, full.names=TRUE, pattern = "-[0-9]+-Locations.csv")
   behav_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Behavior\\.csv$")
   histo_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Histos\\.csv$")
+  ecdf_file <- list.files(temp_path,full.names=TRUE,pattern ="^\\w+-ECDHistos\\.csv$")
+  pdt_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+=PDTs\\.csv$")
   status_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Status\\.csv$")
   messages_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-All\\.csv$")
   df_list <- vector("list")
   if(length(loc_file)==1){
-  df_list$locations <- wcUtils::read_locs(loc_file)
+  df_list$locations <- read_locs(loc_file)
   }
   if(length(fastgps_file)==1){
-    df_list$fastgps <- wcUtils::read_fastGPS(fastgps_file)
+    df_list$fastgps <- read_fastGPS(fastgps_file)
   }
   if(length(all_locs_file)==1){
-    df_list$all_locations <- wcUtils::read_locs(all_locs_file)
+    df_list$all_locations <- read_locs(all_locs_file)
   }
   if(length(behav_file)==1) {
-  df_list$behavior <- wcUtils::read_behav(behav_file)
+  df_list$behavior <- read_behav(behav_file)
+  }
+  if(length(ecdf_file) == 1) {
+    df_list$ecdf <- read_ecdf(ecdf_file)
   }
   if(length(histo_file)==1) {
-  df_list$histos <- wcUtils::read_histos(histo_file)
+  df_list$histos <- read_histos(histo_file)
   if (tidy) { 
-    df_list$timelines <- wcUtils::tidyTimelines(df_list$histos)
+    df_list$timelines <- tidyTimelines(df_list$histos)
     }
   }
   if(length(messages_file)==1) {
-    df_list$messages <- wcUtils::read_allmsg(messages_file)
+    df_list$messages <- read_allmsg(messages_file)
   }
   if(length(status_file)==1) {
     test <- try(readr::read_csv(status_file),silent = TRUE)
