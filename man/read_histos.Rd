@@ -4,12 +4,19 @@
 \alias{read_histos}
 \title{Parse a *-Histos.csv files into a proper data.frame}
 \usage{
-read_histos(histo_file, to_lower = TRUE, fix_csv = FALSE)
+read_histos(
+  histo_file,
+  to_lower = TRUE,
+  dt_fmt = "\%H:\%M:\%S \%d-\%b-\%Y",
+  fix_csv = FALSE
+)
 }
 \arguments{
 \item{histo_file}{file path or file connection to a *-Histos.csv file}
 
 \item{to_lower}{whether to convert the column names to lower case}
+
+\item{dt_fmt}{format for the Date column}
 
 \item{fix_csv}{whether to attemtp to fix any comma, csv issues}
 }

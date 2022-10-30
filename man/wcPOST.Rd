@@ -5,8 +5,8 @@
 \title{Send POST to Wildlife Computers Data Portal API}
 \usage{
 wcPOST(
-  wc.key = Sys.getenv("wcAccessKey"),
-  wc.secret = Sys.getenv("wcSecretKey"),
+  wc.key = Sys.getenv("WCACCESSKEY"),
+  wc.secret = Sys.getenv("WCSECRETKEY"),
   keyfile = NULL,
   params = "action=get_deployments"
 )
@@ -16,7 +16,7 @@ wcPOST(
 
 \item{wc.secret}{secret access key (default retrieves from option value set in .Renviron)}
 
-\item{keyfile}{path to a json formatted keyfile with wcAccessKey and wcSecretKey}
+\item{keyfile}{path to a json formatted keyfile with WCACCESSKEY and WCSECRETKEY}
 
 \item{params}{POST message (default returns a list of deployments)}
 }
@@ -49,7 +49,7 @@ as plain text in any scripts. Instead, include the key values as within your
   option. An alternative is to read values from a different file in the home directory or to use
   OS level environment variables.
   
-  preformatted{ wcAccessKey = 'E4iZhsfdje7590JDNR/VARTEZyhfwb84485X5Xw86ow=' 
-  wcSecretKey = 'WIRJFYhfjdsuSEqKoE7WSDvXUHzVP0pHDJSscmeA7fw=' }
+  preformatted{ WCACCESSKEY = 'E4iZhsfdje7590JDNR/VARTEZyhfwb84485X5Xw86ow=' 
+  WCSECRETKEY = 'WIRJFYhfjdsuSEqKoE7WSDvXUHzVP0pHDJSscmeA7fw=' }
 }
 

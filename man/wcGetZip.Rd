@@ -6,8 +6,8 @@
 \usage{
 wcGetZip(
   id,
-  wc.key = Sys.getenv("wcAccessKey"),
-  wc.secret = Sys.getenv("wcSecretKey"),
+  wc.key = Sys.getenv("WCACCESSKEY"),
+  wc.secret = Sys.getenv("WCACCESSKEY"),
   keyfile = NULL
 )
 }
@@ -16,7 +16,7 @@ wcGetZip(
 
 \item{wc.secret}{secret access key (default retrieves from option value set in .Renviron)}
 
-\item{keyfile}{path to a json formatted keyfile with wcAccessKey and wcSecretKey}
+\item{keyfile}{path to a json formatted keyfile with WCACCESSKEY and wcSecretKey}
 }
 \value{
 a path to the zip file
