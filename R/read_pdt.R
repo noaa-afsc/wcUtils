@@ -14,6 +14,13 @@
 #' @return A tibble
 #' @export
 #'
+#'
+
+.orders <- c("dmY HMS",
+             "Ymd HMS",
+             "HMS dbY",
+             "dbY HMS")
+
 read_pdt <- function(pdt_csv) {
   pdt <- readr::read_csv(pdt_csv) %>% 
     dplyr::select(DeployID, Date, starts_with(c("Depth","MinTemp","MaxTemp"))) %>% 
@@ -23,5 +30,6 @@ read_pdt <- function(pdt_csv) {
                         names_pattern = "(^.{0,5})",
                         values_drop_na = TRUE) %>% 
     dplyr::arrange(DeployID,Date,Depth) %>% 
-    janitor::clean_names()
+    janitor::clean_names() %>% 
+    dplyr::mutate(date = lubridate::parse_date_time(date, .orders))
 }
