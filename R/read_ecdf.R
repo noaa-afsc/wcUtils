@@ -1,6 +1,6 @@
 #' Read and Tidy ECDF Data File
 #'
-#' This function is the workhorse of the `wcECDF` package. All ECDF data are
+#' All ECDF data are
 #' stored within a `*-ECDHistos.csv` file that is output from either the
 #' Wildlife Computers Data Portal or DAP processing software. The function
 #' presumes the `*-ECDHistos.csv` data file is provided as-is from these sources
