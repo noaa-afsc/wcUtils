@@ -37,7 +37,7 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
   }
     
     if (is.null(wc.key) | is.null(wc.secret)) {
-      stop("Wildlife Computers keys not found. Either use .Renviron (see help) or a keyfile.json")
+      stop("Wildlife Computers keys not found. Please specify in .Renviron (see help) or other environment variable")
     }
   
   temp_file <- tempfile()
@@ -61,7 +61,7 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
   behav_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Behavior\\.csv$")
   histo_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Histos\\.csv$")
   ecdf_file <- list.files(temp_path,full.names=TRUE,pattern ="^\\w+-ECDHistos\\.csv$")
-  pdt_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+=PDTs\\.csv$")
+  pdt_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-PDTs\\.csv$")
   status_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Status\\.csv$")
   messages_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-All\\.csv$")
   df_list <- vector("list")
@@ -79,6 +79,9 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
   }
   if(length(ecdf_file) == 1) {
     df_list$ecdf <- read_ecdf(ecdf_file)
+  }
+  if(length(pdt_file) == 1) {
+    df_list$pdt <- read_pdt(pdt_file)
   }
   if(length(histo_file)==1) {
   df_list$histos <- read_histos(histo_file)
