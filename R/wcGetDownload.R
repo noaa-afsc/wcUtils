@@ -104,7 +104,7 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
       )
     }
   }
-
+  Sys.sleep(5)
   unlink(temp_path)
   unlink(temp_file)
   return(df_list)
