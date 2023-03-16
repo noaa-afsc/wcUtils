@@ -22,7 +22,9 @@
              "dbY HMS")
 
 read_pdt <- function(pdt_csv) {
-  pdt <- readr::read_csv(pdt_csv) %>% 
+  pdt <- readr::read_csv(pdt_csv,
+                         progress = FALSE,
+                         show_col_types = FALSE) %>% 
     dplyr::select(DeployID, Date, starts_with(c("Depth","MinTemp","MaxTemp"))) %>% 
     dplyr::select(-ends_with("Error"), -DepthSensor) %>% 
     tidyr::pivot_longer(starts_with(c("Depth","MinTemp","MaxTemp")),

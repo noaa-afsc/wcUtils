@@ -10,33 +10,62 @@ read_locs <- function(loc_file,fix_csv = FALSE) {
     fixCSV(loc_file,overwrite = TRUE)
   }
   
-  col_types <- readr::cols(
-    DeployID = readr::col_character(),
-    Ptt = readr::col_character(),
-    Instr = readr::col_character(),
-    Date = readr::col_datetime("%H:%M:%S %d-%b-%Y"),
-    Type = readr::col_character(),
-    Quality = readr::col_character(),
-    Latitude = readr::col_double(),
-    Longitude = readr::col_double(),
-    `Error radius` = readr::col_integer(),
-    `Error Semi-major axis` = readr::col_integer(),
-    `Error Semi-minor axis` = readr::col_integer(),
-    `Error Ellipse orientation` = readr::col_integer(),
-    Offset = readr::col_character(),
-    `Offset orientation` = readr::col_character(),
-    `Error Radius` = readr::col_integer(),
-    `Error Semi-Major Axis` = readr::col_integer(),
-    `Error Semi-Minor Axis` = readr::col_integer(),
-    `Error Ellipse Orientation` = readr::col_integer(),
-    `Offset Orientation` = readr::col_character(),
-    `GPE MSD` = readr::col_character(),
-    `GPE U` = readr::col_character(),
-    Count = readr::col_integer(),
-    Comment = readr::col_character()
-  )
+  col_list <- readr::read_csv(loc_file, 
+                              n_max =1,
+                              progress = FALSE,
+                              show_col_types = FALSE) %>% 
+    colnames()
   
-  loc_df <- readr::read_csv(loc_file, col_types = col_types) %>% 
+  if ("Error Semi-Major Axis" %in% col_list) {
+    col_types <- readr::cols(
+      DeployID = readr::col_character(),
+      Ptt = readr::col_character(),
+      Instr = readr::col_character(),
+      Date = readr::col_datetime("%H:%M:%S %d-%b-%Y"),
+      Type = readr::col_character(),
+      Quality = readr::col_character(),
+      Latitude = readr::col_double(),
+      Longitude = readr::col_double(),
+      Offset = readr::col_character(),
+      `Error Radius` = readr::col_integer(),
+      `Error Semi-Major Axis` = readr::col_integer(),
+      `Error Semi-Minor Axis` = readr::col_integer(),
+      `Error Ellipse Orientation` = readr::col_integer(),
+      `Offset Orientation` = readr::col_character(),
+      `GPE MSD` = readr::col_character(),
+      `GPE U` = readr::col_character(),
+      Count = readr::col_integer(),
+      Comment = readr::col_character()
+    )
+  } else {
+    col_types <- readr::cols(
+      DeployID = readr::col_character(),
+      Ptt = readr::col_character(),
+      Instr = readr::col_character(),
+      Date = readr::col_datetime("%H:%M:%S %d-%b-%Y"),
+      Type = readr::col_character(),
+      Quality = readr::col_character(),
+      Latitude = readr::col_double(),
+      Longitude = readr::col_double(),
+      `Error radius` = readr::col_integer(),
+      `Error Semi-major axis` = readr::col_integer(),
+      `Error Semi-minor axis` = readr::col_integer(),
+      `Error Ellipse orientation` = readr::col_integer(),
+      Offset = readr::col_character(),
+      `Offset orientation` = readr::col_character(),
+      `GPE MSD` = readr::col_character(),
+      `GPE U` = readr::col_character(),
+      Count = readr::col_integer(),
+      Comment = readr::col_character()
+    )
+  }
+  
+  
+  
+  loc_df <- readr::read_csv(loc_file, 
+                            col_types = col_types,
+                            progress = FALSE,
+                            show_col_types = FALSE) %>% 
     janitor::clean_names() %>% 
     dplyr::rename(deployid = deploy_id)
   
