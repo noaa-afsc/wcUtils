@@ -93,14 +93,22 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
     df_list$messages <- read_allmsg(messages_file)
   }
   if(length(status_file)==1) {
-    test <- try(readr::read_csv(status_file),silent = TRUE)
+    test <- try(readr::read_csv(status_file,
+                                progress = FALSE,
+                                show_col_types = FALSE),
+                silent = TRUE)
     if(!inherits(test,"try-error")) {
       df_list$status <- readr::read_csv(
-        status_file)
+        status_file,
+        progress = FALSE,
+        show_col_types = FALSE)
     }
     else {
       df_list$status <- readr::read_csv(
-        status_file,skip=1
+        status_file,
+        progress = FALSE,
+        show_col_types = FALSE,
+        skip=1
       )
     }
   }
