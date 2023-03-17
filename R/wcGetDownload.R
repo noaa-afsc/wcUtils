@@ -55,6 +55,7 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
     dir.create(temp_path)
     unzip.fail <- try(unzip(temp_file, exdir=temp_path))
   }
+  
   loc_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Locations\\.csv$")
   fastgps_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-\\d+-FastGPS\\.csv$")
   all_locs_file <- list.files(temp_path, full.names=TRUE, pattern = "-[0-9]+-Locations.csv")
@@ -64,7 +65,9 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
   pdt_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-PDTs\\.csv$")
   status_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Status\\.csv$")
   messages_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-All\\.csv$")
+  
   df_list <- vector("list")
+  
   if(length(loc_file)==1){
   df_list$locations <- read_locs(loc_file)
   }
@@ -92,26 +95,26 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
   if(length(messages_file)==1) {
     df_list$messages <- read_allmsg(messages_file)
   }
-  if(length(status_file)==1) {
-    test <- try(readr::read_csv(status_file,
-                                progress = FALSE,
-                                show_col_types = FALSE),
-                silent = TRUE)
-    if(!inherits(test,"try-error")) {
-      df_list$status <- readr::read_csv(
-        status_file,
-        progress = FALSE,
-        show_col_types = FALSE)
-    }
-    else {
-      df_list$status <- readr::read_csv(
-        status_file,
-        progress = FALSE,
-        show_col_types = FALSE,
-        skip=1
-      )
-    }
-  }
+  # if(length(status_file)==1) {
+  #   test <- try(readr::read_csv(status_file,
+  #                               progress = FALSE,
+  #                               show_col_types = FALSE),
+  #               silent = TRUE)
+  #   if(!inherits(test,"try-error")) {
+  #     df_list$status <- readr::read_csv(
+  #       status_file,
+  #       progress = FALSE,
+  #       show_col_types = FALSE)
+  #   }
+  #   else {
+  #     df_list$status <- readr::read_csv(
+  #       status_file,
+  #       progress = FALSE,
+  #       show_col_types = FALSE,
+  #       skip=1
+  #     )
+  #   }
+  # }
   Sys.sleep(3)
   unlink(temp_path)
   unlink(temp_file)
