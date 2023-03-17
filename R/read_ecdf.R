@@ -41,8 +41,8 @@ read_ecdf <- function(ecdf_csv) {
     Ptt = readr::col_integer(),
     Source = readr::col_character(),
     Instr = readr::col_character(),
-    Start = readr::col_character(),
-    End = readr::col_character(),
+    Start = readr::col_datetime("%H:%M:%S %d-%b-%Y"),
+    End = readr::col_datetime("%H:%M:%S %d-%b-%Y"),
     Kind = readr::col_character(),
     Type = readr::col_character()
   )
@@ -54,10 +54,10 @@ read_ecdf <- function(ecdf_csv) {
   
   ecdhistos <-
     readr::read_csv(ecdf_csv, col_types = .cols) %>%
-    dplyr::mutate(
-      Start = lubridate::parse_date_time(Start, .orders),
-      End = lubridate::parse_date_time(End, .orders)
-    ) %>%
+    # dplyr::mutate(
+    #   Start = lubridate::parse_date_time(Start, .orders),
+    #   End = lubridate::parse_date_time(End, .orders)
+    # ) %>%
     janitor::clean_names(case = "snake") %>%
     dplyr::select(-c(min_sec, max_sec)) %>%
     dplyr::arrange(deploy_id, start) %>%
