@@ -60,8 +60,6 @@ read_locs <- function(loc_file,fix_csv = FALSE) {
     )
   }
   
-  
-  
   loc_df <- readr::read_csv(loc_file, 
                             col_types = col_types,
                             progress = FALSE,

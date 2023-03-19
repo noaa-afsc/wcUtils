@@ -44,17 +44,25 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
   writeBin(httr::content(r, "raw"), temp_file)
   temp_path <- tempfile()
   dir.create(temp_path)
+  
+  options(warn = 2)
   unzip.fail <- try(unzip(temp_file, exdir=temp_path))
+  
   while(inherits(unzip.fail, "try-error")){
-    warning(paste("error unzipping: ",id))
+    message(paste("error unzipping: ",id))
     unlink(temp_file)
     unlink(temp_path)
     temp_file <- tempfile()
+    r <- wcPOST(wc.key,wc.secret,
+                params=download_params)
     writeBin(httr::content(r, "raw"), temp_file)
     temp_path <- tempfile()
     dir.create(temp_path)
     unzip.fail <- try(unzip(temp_file, exdir=temp_path))
   }
+  
+  options(warn = 0)
+  
   
   loc_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-Locations\\.csv$")
   fastgps_file <- list.files(temp_path,full.names=TRUE,pattern="^\\w+-\\d+-FastGPS\\.csv$")
@@ -68,31 +76,31 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
   
   df_list <- vector("list")
   
-  if(length(loc_file)==1){
-  df_list$locations <- read_locs(loc_file)
+  if(!rlang::is_empty(loc_file)){
+    df_list$locations <- read_locs(loc_file)
   }
-  if(length(fastgps_file)==1){
+  if(!rlang::is_empty(fastgps_file)){
     df_list$fastgps <- read_fastGPS(fastgps_file)
   }
-  if(length(all_locs_file)==1){
+  if(!rlang::is_empty(all_locs_file)){
     df_list$all_locations <- read_locs(all_locs_file)
   }
-  if(length(behav_file)==1) {
+  if(!rlang::is_empty(behav_file)) {
   df_list$behavior <- read_behav(behav_file)
   }
-  if(length(ecdf_file) == 1) {
+  if(!rlang::is_empty(ecdf_file)) {
     df_list$ecdf <- read_ecdf(ecdf_file)
   }
-  if(length(pdt_file) == 1) {
+  if(!rlang::is_empty(pdt_file)) {
     df_list$pdt <- read_pdt(pdt_file)
   }
-  if(length(histo_file)==1) {
+  if(!rlang::is_empty(histo_file)) {
   df_list$histos <- read_histos(histo_file)
   if (tidy) { 
     df_list$timelines <- tidyTimelines(df_list$histos)
     }
   }
-  if(length(messages_file)==1) {
+  if(!rlang::is_empty(messages_file)) {
     df_list$messages <- read_allmsg(messages_file)
   }
   # if(length(status_file)==1) {
