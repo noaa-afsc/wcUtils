@@ -98,6 +98,9 @@ wcGetDownload <- function(id,wc.key=Sys.getenv("WCACCESSKEY"),
   df_list$histos <- read_histos(histo_file)
   if (tidy) { 
     df_list$timelines <- tidyTimelines(df_list$histos)
+    df_list$dive_depths <- tidyDiveDepths(df_list$histos)
+    df_list$dive_durations <- tidyDiveDurations(df_list$histos)
+    df_list$time_depth <- tidyTimeAtDepth(df_list$histos)
     }
   }
   if(!rlang::is_empty(messages_file)) {
