@@ -85,7 +85,14 @@ read_ecdf <- function(ecdf_csv) {
     tidyr::pivot_wider(names_from = type, values_from = data) %>%
     dplyr::mutate(dry = purrr::map_dbl(dry,
                                        ~ purrr::pluck(., "percent_time", 1,
-                                                      .default = 0.0))) %>%
+                                                      .default = 0.0)),
+                  n_dives_shallow = purrr::map_dbl(shallow,
+                                           ~ purrr::pluck(., "max_dives", 1,
+                                                          .default = 0.0)),
+                  n_dives_deep = purrr::map_dbl(deep,
+                                                ~ purrr::pluck(., "max_dives",1,
+                                                               .default = 0.0))
+                  ) %>%
     dplyr::rename(percent_dry = dry) %>%
     dplyr::ungroup() %>%
     dplyr::mutate(shallow_ecdf = purrr::map2("shallow",shallow, as_ecdf),
