@@ -13,7 +13,6 @@
 #' @export
 wcGetProjectIDs <- function(xml_content,project=NULL) {
   if(class(xml_content) == "response") {
-    warning('wcPOST response object provided, extracting content to xml',call.=FALSE)
     doc <- xml2::read_xml(httr::content(xml_content, 'raw'))
     doc <- XML::xmlParse(doc)
   } else if(class(xml_content) == "xml_document") {

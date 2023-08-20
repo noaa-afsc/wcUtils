@@ -6,8 +6,8 @@
 \usage{
 wcGetDownload(
   id,
-  wc.key = Sys.getenv("wcAccessKey"),
-  wc.secret = Sys.getenv("wcSecretKey"),
+  wc.key = Sys.getenv("WCACCESSKEY"),
+  wc.secret = Sys.getenv("WCSECRETKEY"),
   keyfile = NULL,
   tidy = TRUE
 )
