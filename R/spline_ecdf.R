@@ -1,3 +1,12 @@
+#' approximate ecdf with spline
+#'
+#' @param ecdf 
+#' @param bin.width 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 spline_ecdf <- function(ecdf, bin.width) {
   if (is.null(ecdf)) {
     return(NULL)

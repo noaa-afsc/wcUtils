@@ -1,3 +1,12 @@
+#' Determine percent TAD at specific depth
+#'
+#' @param ecdf 
+#' @param pct_tad 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 x_pct_depth <- function (ecdf,pct_tad) {
   if (is.null(ecdf)) {
     return(NA)
