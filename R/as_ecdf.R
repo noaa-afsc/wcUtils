@@ -41,6 +41,18 @@ as_ecdf <- function(type, ecdf) {
     ecdf <- tibble::add_row(ecdf, depth_break = 0, ecd_prop = 0, .before = 1)
   }
   
+  if(is.unsorted(ecdf$depth_break)) {
+    cli::cli_warn(c("Depth breaks are unsorted and must be increasing in value",
+                    i = "empty value returned"))
+    ecdf_s3 <- list(
+      type = type,
+      percent_time = percent_time,
+      ecdf = c()
+    )
+    class(ecdf_s3) <- "wcECDF"
+    return(ecdf_s3)
+  }
+  
   ecdf_s3 <- list(
     type = type,
     percent_time = percent_time,
