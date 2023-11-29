@@ -47,7 +47,7 @@ as_ecdf <- function(type, ecdf) {
     ecdf_s3 <- list(
       type = type,
       percent_time = percent_time,
-      ecdf = c()
+      ecdf = tibble(ecd_prop = numeric(), depth_break = numeric())
     )
     class(ecdf_s3) <- "wcECDF"
     return(ecdf_s3)
