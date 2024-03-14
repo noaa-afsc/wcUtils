@@ -7,8 +7,8 @@ Install
 -------
 
 ``` r
-library("devtools")
-install_github("jmlondon/wcUtils")
+library("remotes")
+remotes::install_github("noaa-afsc/wcUtils")
 ```
 
 ##### Disclaimer
